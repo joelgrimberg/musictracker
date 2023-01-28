@@ -35,7 +35,7 @@ type CreateContextOptions = {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
+export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
@@ -66,6 +66,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { env } from "../../env/server.mjs";
+import SpotifyWebApi from "spotify-web-api-node";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -122,3 +124,36 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+const addSpotifyApi = t.middleware(async ({ ctx, next }) => {
+  const { access_token, expires_at, refresh_token, id } = await ctx.prisma.account.findFirstOrThrow({ where: { userId: ctx.session?.user?.id, provider: 'spotify' } });
+  if (!access_token || !refresh_token || !expires_at) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "No Spotify account linked" });
+  }
+  
+  const spotifyApi = new SpotifyWebApi({
+      clientId: env.SPOTIFY_CLIENT_ID,
+      clientSecret: env.SPOTIFY_CLIENT_SECRET
+  });
+  
+  spotifyApi.setRefreshToken(refresh_token);
+  spotifyApi.setAccessToken(access_token);
+
+  if (expires_at < Math.round(Date.now()/1000)) {
+      const { body } = await spotifyApi.refreshAccessToken()
+      spotifyApi.setAccessToken(body.access_token);
+
+      await ctx.prisma.account.update({
+          where: { id },
+          data: { refresh_token: body.refresh_token, access_token: body.access_token, expires_at: Math.round(Date.now()/1000) + body.expires_in }
+      })
+  }
+
+  return next({
+    ctx: {
+      spotify: spotifyApi
+    },
+  });
+});
+
+export const protectedSpotifyProcedure = protectedProcedure.use(addSpotifyApi);

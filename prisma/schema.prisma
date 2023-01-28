@@ -64,3 +64,11 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Song {
+    uuid        String @id @default(uuid())
+    spotifyId   String
+    title       String
+    artist      String
+    coverUrl    String
+}
