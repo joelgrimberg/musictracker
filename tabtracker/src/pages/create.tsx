@@ -13,11 +13,11 @@ const CreateSongPage: NextPage = () => {
     { enabled: searchQuery !== "" }
   );
   const onSubmit: FormEventHandler = (event) => {
-    console.log("submitt");
     event.preventDefault();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+
+    // @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setSearchQuery((event.target as any).search.value);
-    console.log(event);
   };
 
   const { mutate, isLoading } = api.song.addTrack.useMutation({onSuccess: () => push("/")});
@@ -31,8 +31,6 @@ const CreateSongPage: NextPage = () => {
     <Layout>
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <input name="search" placeholder="Search by title, artist, whatever" />
-        {/* <input name="artist" placeholder="artist" /> */}
-        {/* <input name="coverUrl" placeholder="Cover URL" /> */}
         <button type="submit">Search</button>
         <ul className="text-white">
           {searchResults &&

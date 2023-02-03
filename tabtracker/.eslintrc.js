@@ -1,19 +1,21 @@
-{
+module.exports ={
   "overrides": [
     {
       "extends": [
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
-      "files": ["*.ts", "*.tsx"],
+      "files": ["./tabtracker/*.ts", "./tabtracker/*.tsx"],
       "parserOptions": {
-        "project": "tsconfig.json"
+        "project": "./tabtracker./tsconfig.json"
       }
     }
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": __dirname,
   },
+  "ignorePatterns": [".eslintrc.js"],
   "plugins": ["@typescript-eslint"],
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {

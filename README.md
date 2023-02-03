@@ -1,28 +1,23 @@
-# Create T3 App
+# Qxperts Training App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## How to use the app
 
-## What's next? How do I make an app with this?
+1. Install node (with `asdf` if you are a chad)
+2. Install packages `npm install` from the root
+3. Setup your environment by copying the `.env.example` to `.env`
+4. Generate the required `NEXTAUTH_SECRET` and populate the `.env` file. You can generate a secret with `openssl rand -base64 32`
+5. Generate prisma schemas `npm run db:generate`
+6. Run migrations `npm run db:push`
+7. Start the app `npm run dev`. Can be run from root, app workspace or any test project
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Connecting to spotify
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+1. Login / Sign up to the [Spotify Developer Console](https://developer.spotify.com/)
+2. Create an App in [Spotify Dashboard](https://developer.spotify.com/dashboard/applications)
+3. Edit settings and add a redirect url to
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+   ```url
+   http://localhost:3000/api/auth/callback/spotify
+   ```
 
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+4. Copy client ID an secret to your env file (in tabtracker)
