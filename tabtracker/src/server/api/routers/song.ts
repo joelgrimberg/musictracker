@@ -21,6 +21,6 @@ export const songRouter = createTRPCRouter({
     removeTrack: protectedProcedure.input(z.object({
         uuid: z.string()
     })).mutation(({ctx, input}) => {
-        return ctx.prisma.song.delete({ where: {  uuid: z.string() }})
+        return ctx.prisma.song.delete({ where: {  uuid: input.uuid }})
     }),
 });

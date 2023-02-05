@@ -1,17 +1,6 @@
 import type { FunctionComponent } from "react";
 import { api } from "../../utils/api";
 import Image from 'next/image'
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-
-export const SongList: FunctionComponent = () => {
-  const { data: songs } = api.song.getAllSongs.useQuery()
-
-<<<<<<< Updated upstream
-=======
-=======
 import { useRouter } from "next/router";
 import type { FormEventHandler} from "react";
 import { Layout } from "../layout/layout";
@@ -19,24 +8,10 @@ import { Layout } from "../layout/layout";
 export const SongList: FunctionComponent = () => {
   const { data: songs } = api.song.getAllSongs.useQuery()
   const { push } = useRouter();
->>>>>>> Stashed changes
->>>>>>> Stashed changes
   const spotifyImageLoader = ({ src , width, quality = 75 }: {src: string, width: number | undefined, quality?: number}) => {
     return `${src}?w=${width}&q=${quality || 75}`
   }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-  return (
-    <div className="flex flex-col text-white gap-4 ">
-      {songs && songs.map(({ title, uuid, coverUrl }) => (
-        <div className="bg-white/20 p-4 rounded" key={uuid}>
-          <h2 >{title}</h2>
-<<<<<<< Updated upstream
-=======
-=======
   const onSubmit: FormEventHandler = (event) => {
     event.preventDefault();
   }
@@ -74,8 +49,6 @@ export const SongList: FunctionComponent = () => {
 
           <br />
 
->>>>>>> Stashed changes
->>>>>>> Stashed changes
           <Image
             loader={spotifyImageLoader}
             src={coverUrl}
@@ -83,18 +56,6 @@ export const SongList: FunctionComponent = () => {
             width={200}
             height={200}
           />
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-        </div>
-      ))}
-    </div>
-  );
-};
-<<<<<<< Updated upstream
-=======
-=======
           <button type="submit">Search</button>
         </div>
         </form>
@@ -105,5 +66,3 @@ export const SongList: FunctionComponent = () => {
 };
 
 
->>>>>>> Stashed changes
->>>>>>> Stashed changes
