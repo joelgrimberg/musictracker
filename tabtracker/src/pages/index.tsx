@@ -26,14 +26,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const Home: NextPage = () => {
   return (
     <Layout>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 md:gap-8">
         <Link
           className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-          href="/create"
+          href="/addsong"
         >
           <h3 className="text-2xl font-bold">Add a new song</h3>
           <div className="text-lg">
             Track the tabs of a new song from your favorite music source
+          </div>
+        </Link>
+        <Link
+          className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+          href="/addplaylist"
+        >
+          <h3 className="text-2xl font-bold">Add a new playlist</h3>
+          <div className="text-lg">
+            Add a playlist
           </div>
         </Link>
       </div>
@@ -49,8 +58,7 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData} = useSession();
-  
-  console.log(sessionData)
+
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">

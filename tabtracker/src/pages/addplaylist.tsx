@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Layout } from "../components/layout/layout";
 import { api } from "../utils/api";
 
-const CreateSongPage: NextPage = () => {
+const CreatePlaylistPage: NextPage = () => {
   const { push } = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const { data: searchResults } = api.song.searchTrack.useQuery(

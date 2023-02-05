@@ -66,9 +66,18 @@ model VerificationToken {
 }
 
 model Song {
-    uuid        String @id @default(uuid())
-    spotifyId   String
-    title       String
-    artist      String
-    coverUrl    String
+    uuid         String    @id @default(uuid())
+    spotifyId    String
+    title        String
+    artist       String
+    coverUrl     String
+    playlistUuid String?
+}
+
+model Playlist {
+    uuid       String @id @default(uuid())
+    spotifyId  String
+    playlistId String
+    title      String
+    song       String
 }
