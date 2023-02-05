@@ -14,7 +14,7 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Tab<span className="text-[hsl(280,100%,70%)]">Tracker</span>
           </h1>
-         
+
             {children}
         </div>
       </main>
