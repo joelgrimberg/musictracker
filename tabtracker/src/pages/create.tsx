@@ -29,6 +29,18 @@ const CreateSongPage: NextPage = () => {
     [setSearchQuery]
   );
 
+  const onAddSpotifyTrack = useCallback(
+    (item: SpotifyApi.TrackObjectFull) => {
+      addTrack({
+        title: item.name,
+        artist: item.artists.map((artist) => artist.name).join(" "),
+        coverUrl: item.album.images[0]?.url || "https://picsum.photos/200/200",
+        spotifyId: item.id,
+      });
+    },
+    [addTrack]
+  );
+
   return (
     <Layout>
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
@@ -43,18 +55,7 @@ const CreateSongPage: NextPage = () => {
                 <button
                   className="px-4 text-pink-300"
                   disabled={isLoading}
-                  onClick={() =>
-                    addTrack({
-                      title: item.name,
-                      artist: item.artists
-                        .map((artist) => artist.name)
-                        .join(" "),
-                      coverUrl:
-                        item.album.images[0]?.url ||
-                        "https://picsum.photos/200/200",
-                      spotifyId: item.id,
-                    })
-                  }
+                  onClick={() => onAddSpotifyTrack(item)}
                 >
                   Add this song!
                 </button>
