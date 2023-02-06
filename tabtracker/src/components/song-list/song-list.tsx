@@ -36,7 +36,7 @@ export const SongList: FunctionComponent = () => {
               <h2>{title}</h2>
             </div>
 
-            <div className='w-100'>
+            <div className='flex justify-end'>
               <form onSubmit={onSubmit} key={uuid} className="flex flex-col gap-4">
                 <input type="hidden" name="songId" value={uuid} />
                 <button disabled={isLoading} onClick={removeTrack(uuid)} type="submit">
@@ -48,7 +48,7 @@ export const SongList: FunctionComponent = () => {
             </div>
           </div>
 
-          <div className="grid grid-flow-row-dense grid-cols-1">
+          <div className="col-span-2">
             <Image
               loader={spotifyImageLoader}
               src={coverUrl}
