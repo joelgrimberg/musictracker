@@ -1,8 +1,7 @@
-import { FunctionComponent, useCallback } from "react";
+import type { FunctionComponent} from "react";
 import { api } from "../../utils/api";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import type { FormEventHandler } from "react";
 
 export const SongList: FunctionComponent = () => {
   const { data: songs } = api.song.getAllSongs.useQuery();
@@ -19,15 +18,9 @@ export const SongList: FunctionComponent = () => {
     return `${src}?w=${width}&q=${quality || 75}`;
   };
 
-  const { mutate, isLoading } = api.song.removeTrack.useMutation({
+  const { mutate: removeTrack, isLoading } = api.song.removeTrack.useMutation({
     onSuccess: () => push("/"),
   });
-  const removeTrack = useCallback(
-    (uuid: string) => {
-      mutate({ uuid });
-    },
-    [mutate]
-  );
 
   return (
     <div className="grid grid-cols-2 gap-4 rounded-xl bg-white/10 p-4 text-white sm:grid-cols-4 md:gap-8">
@@ -44,7 +37,7 @@ export const SongList: FunctionComponent = () => {
               <h2 className="leading-6">{title}</h2>
               <button
                 disabled={isLoading}
-                onClick={() => removeTrack(uuid)}
+                onClick={() => removeTrack({ uuid })}
                 type="submit"
                 className="flex justify-end align-middle"
               >
