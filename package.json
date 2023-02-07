@@ -16,5 +16,10 @@
   },
   "devDependencies": {
     "husky": "^8.0.3"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write"
+    ]
   }
 }
