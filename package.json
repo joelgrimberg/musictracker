@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "npm run dev --workspace=tabtracker",
     "db:push": "npm run db:push --workspace=tabtracker",
-    "db:generate": "npm run db:generate --workspace=tabtracker"
+    "db:generate": "npm run db:generate --workspace=tabtracker",
+    "prettier": "npx prettier --write ."
   }
 }
