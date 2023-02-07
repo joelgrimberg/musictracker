@@ -31,19 +31,10 @@ const Home: NextPage = () => {
           className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
           href="/addsong"
         >
-          <h3 className="text-2xl font-bold">Add a new song</h3>
-          <div className="text-lg">
-            Track the tabs of a new song from your favorite music source
-          </div>
-        </Link>
-        <Link
-          className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-          href="/addplaylist"
-        >
-          <h3 className="text-2xl font-bold">Add a new playlist</h3>
-          <div className="text-lg">
-            Add a playlist
-          </div>
+        <h3 className="text-2xl font-bold">Add a new song</h3>
+        <div className="text-lg">
+          Track the tabs of a new song from your favorite music source
+        </div>
         </Link>
       </div>
       <SongList />

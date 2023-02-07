@@ -71,13 +71,5 @@ model Song {
     title        String
     artist       String
     coverUrl     String
-    playlistUuid String?
 }
 
-model Playlist {
-    uuid       String @id @default(uuid())
-    spotifyId  String
-    playlistId String
-    title      String
-    song       String
-}
