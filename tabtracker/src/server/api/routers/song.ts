@@ -28,4 +28,13 @@ export const songRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.song.create({ data: input })
     }),
+  removeTrack: protectedProcedure
+    .input(
+      z.object({
+        uuid: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.song.delete({ where: { uuid: input.uuid } })
+    }),
 })
