@@ -7,7 +7,7 @@ import { songRouter } from "./routers/song";
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
-  song: songRouter
+  song: songRouter,
 });
 
 // export type definition of API
