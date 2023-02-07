@@ -1,28 +1,28 @@
-import type { GetServerSideProps } from "next";
-import { type NextPage } from "next";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { createInnerTRPCContext } from "../server/api/trpc";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { appRouter } from "../server/api/root";
-import { SongList } from "../components/song-list/song-list";
-import superjson from "superjson";
-import { Layout } from "../components/layout/layout";
+import type { GetServerSideProps } from 'next'
+import { type NextPage } from 'next'
+import Link from 'next/link'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { createInnerTRPCContext } from '../server/api/trpc'
+import { createProxySSGHelpers } from '@trpc/react-query/ssg'
+import { appRouter } from '../server/api/root'
+import { SongList } from '../components/song-list/song-list'
+import superjson from 'superjson'
+import { Layout } from '../components/layout/layout'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: createInnerTRPCContext({ session: null }),
     transformer: superjson,
-  });
-  await ssg.song.getAllSongs.prefetch();
+  })
+  await ssg.song.getAllSongs.prefetch()
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
     },
-  };
-};
+  }
+}
 const Home: NextPage = () => {
   return (
     <Layout>
@@ -42,14 +42,14 @@ const Home: NextPage = () => {
         <AuthShowcase />
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 const AuthShowcase: React.FC = () => {
-  const { data: sessionData} = useSession();
-  
+  const { data: sessionData } = useSession()
+
   console.log(sessionData)
   return (
     <div className="flex flex-col items-center justify-center gap-4">
@@ -60,8 +60,8 @@ const AuthShowcase: React.FC = () => {
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+        {sessionData ? 'Sign out' : 'Sign in'}
       </button>
     </div>
-  );
-};
+  )
+}

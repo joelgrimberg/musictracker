@@ -1,5 +1,5 @@
-import Head from "next/head";
-import type { FunctionComponent, PropsWithChildren } from "react";
+import Head from 'next/head'
+import type { FunctionComponent, PropsWithChildren } from 'react'
 
 export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
@@ -14,10 +14,10 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Tab<span className="text-[hsl(280,100%,70%)]">Tracker</span>
           </h1>
-         
-            {children}
+
+          {children}
         </div>
       </main>
     </>
-  );
-};
+  )
+}
