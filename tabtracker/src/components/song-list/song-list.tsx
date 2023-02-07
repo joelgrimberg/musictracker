@@ -60,6 +60,7 @@ export const SongList: FunctionComponent = () => {
 
             <Image
               loader={spotifyImageLoader}
+              priority
               src={coverUrl}
               alt={`album art for ${title}`}
               width={300}
