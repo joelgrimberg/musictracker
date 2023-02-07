@@ -15,6 +15,14 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+<<<<<<< Updated upstream
     "husky": "^8.0.3"
+=======
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.1"
+  },
+  "lint-staged": {
+    "*": "npm run prettier"
+>>>>>>> Stashed changes
   }
 }
