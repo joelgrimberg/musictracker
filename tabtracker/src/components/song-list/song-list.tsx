@@ -1,32 +1,32 @@
-import type { FunctionComponent} from "react";
-import { api } from "../../utils/api";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import type { FunctionComponent } from 'react'
+import { api } from '../../utils/api'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export const SongList: FunctionComponent = () => {
-  const { data: songs } = api.song.getAllSongs.useQuery();
-  const { push } = useRouter();
+  const { data: songs } = api.song.getAllSongs.useQuery()
+  const { push } = useRouter()
   const spotifyImageLoader = ({
     src,
     width,
     quality = 75,
   }: {
-    src: string;
-    width: number | undefined;
-    quality?: number;
+    src: string
+    width: number | undefined
+    quality?: number
   }) => {
-    return `${src}?w=${width}&q=${quality || 75}`;
-  };
+    return `${src}?w=${width}&q=${quality || 75}`
+  }
 
   const { mutate: removeTrack, isLoading } = api.song.removeTrack.useMutation({
-    onSuccess: () => push("/"),
-  });
+    onSuccess: () => push('/'),
+  })
 
   return (
     <div className="grid grid-cols-2 gap-4 rounded-xl bg-white/10 p-4 text-white sm:grid-cols-4 md:gap-8">
       {songs && songs.length
-        ? ""
-        : "quickly add your first song so I can show it here 🥳"}
+        ? ''
+        : 'quickly add your first song so I can show it here 🥳'}
       {songs &&
         songs.map(({ title, uuid, coverUrl }) => (
           <div
@@ -69,5 +69,5 @@ export const SongList: FunctionComponent = () => {
           </div>
         ))}
     </div>
-  );
-};
+  )
+}

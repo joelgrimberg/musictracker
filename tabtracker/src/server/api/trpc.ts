@@ -16,15 +16,15 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
+import { type Session } from 'next-auth'
 
-import { getServerAuthSession } from "../auth";
-import { prisma } from "../db";
+import { getServerAuthSession } from '../auth'
+import { prisma } from '../db'
 
 type CreateContextOptions = {
-  session: Session | null;
-};
+  session: Session | null
+}
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use
@@ -39,8 +39,8 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
-  };
-};
+  }
+}
 
 /**
  * This is the actual context you'll use in your router. It will be used to
@@ -48,15 +48,15 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+  const { req, res } = opts
 
   // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+  const session = await getServerAuthSession({ req, res })
 
   return createInnerTRPCContext({
     session,
-  });
-};
+  })
+}
 
 /**
  * 2. INITIALIZATION
@@ -64,17 +64,17 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { env } from "../../env/server.mjs";
-import SpotifyWebApi from "spotify-web-api-node";
+import { initTRPC, TRPCError } from '@trpc/server'
+import superjson from 'superjson'
+import { env } from '../../env/server.mjs'
+import SpotifyWebApi from 'spotify-web-api-node'
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
   errorFormatter({ shape }) {
-    return shape;
+    return shape
   },
-});
+})
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -87,7 +87,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * This is how you create new routers and subrouters in your tRPC API
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router;
+export const createTRPCRouter = t.router
 
 /**
  * Public (unauthed) procedure
@@ -96,7 +96,7 @@ export const createTRPCRouter = t.router;
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure
 
 /**
  * Reusable middleware that enforces users are logged in before running the
@@ -104,15 +104,15 @@ export const publicProcedure = t.procedure;
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
     },
-  });
-});
+  })
+})
 
 /**
  * Protected (authed) procedure
@@ -123,37 +123,47 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)
 
 const addSpotifyApi = t.middleware(async ({ ctx, next }) => {
-  const { access_token, expires_at, refresh_token, id } = await ctx.prisma.account.findFirstOrThrow({ where: { userId: ctx.session?.user?.id, provider: 'spotify' } });
+  const { access_token, expires_at, refresh_token, id } =
+    await ctx.prisma.account.findFirstOrThrow({
+      where: { userId: ctx.session?.user?.id, provider: 'spotify' },
+    })
   if (!access_token || !refresh_token || !expires_at) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "No Spotify account linked" });
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'No Spotify account linked',
+    })
   }
-  
+
   const spotifyApi = new SpotifyWebApi({
-      clientId: env.SPOTIFY_CLIENT_ID,
-      clientSecret: env.SPOTIFY_CLIENT_SECRET
-  });
-  
-  spotifyApi.setRefreshToken(refresh_token);
-  spotifyApi.setAccessToken(access_token);
+    clientId: env.SPOTIFY_CLIENT_ID,
+    clientSecret: env.SPOTIFY_CLIENT_SECRET,
+  })
 
-  if (expires_at < Math.round(Date.now()/1000)) {
-      const { body } = await spotifyApi.refreshAccessToken()
-      spotifyApi.setAccessToken(body.access_token);
+  spotifyApi.setRefreshToken(refresh_token)
+  spotifyApi.setAccessToken(access_token)
 
-      await ctx.prisma.account.update({
-          where: { id },
-          data: { refresh_token: body.refresh_token, access_token: body.access_token, expires_at: Math.round(Date.now()/1000) + body.expires_in }
-      })
+  if (expires_at < Math.round(Date.now() / 1000)) {
+    const { body } = await spotifyApi.refreshAccessToken()
+    spotifyApi.setAccessToken(body.access_token)
+
+    await ctx.prisma.account.update({
+      where: { id },
+      data: {
+        refresh_token: body.refresh_token,
+        access_token: body.access_token,
+        expires_at: Math.round(Date.now() / 1000) + body.expires_in,
+      },
+    })
   }
 
   return next({
     ctx: {
-      spotify: spotifyApi
+      spotify: spotifyApi,
     },
-  });
-});
+  })
+})
 
-export const protectedSpotifyProcedure = protectedProcedure.use(addSpotifyApi);
+export const protectedSpotifyProcedure = protectedProcedure.use(addSpotifyApi)
