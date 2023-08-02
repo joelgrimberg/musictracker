@@ -5,7 +5,7 @@ import { z } from 'zod';
 const c = initContract();
 
 const PlaylistSchema = z.object({
-    id: z.string(),
+    id: z.number(),
     title: z.string(),
 });
 
@@ -26,6 +26,8 @@ export const contract = c.router({
         path: `/playlists/:id`,
         responses: {
             200: PlaylistSchema.nullable(),
+            400: c.type<{ message: string }>(),
+            404: c.type<{ message: string }>()
         },
         summary: 'Get a playlist by id',
     },
@@ -38,4 +40,4 @@ export const contract = c.router({
         summary: 'Get a all playlist',
 
     }
-}, { pathPrefix: 'api' });
+}, {pathPrefix: '/api'});
