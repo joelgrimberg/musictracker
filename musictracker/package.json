@@ -20,6 +20,7 @@
     "@ts-rest/core": "^3.26.4",
     "@ts-rest/express": "^3.26.4",
     "body-parser": "^1.20.2",
+    "@tanstack/router": "^0.0.1-beta.126",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cors": "^2.8.5",
