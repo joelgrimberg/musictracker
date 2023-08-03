@@ -32,8 +32,8 @@ function CreatePlaylistDialog({ open, onOpenChange }: { open: boolean, onOpenCha
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                        <Label htmlFor="url">Playlist name</Label>
-                        <Input ref={playlistNameRef} id="url" placeholder="My playlist" />
+                        <Label htmlFor="name">Playlist name</Label>
+                        <Input ref={playlistNameRef} id="name" placeholder="Name of your playlist" />
                     </div>
                 </div>
                 <DialogFooter>
