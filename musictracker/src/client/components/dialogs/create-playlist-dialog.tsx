@@ -20,7 +20,7 @@ function CreatePlaylistDialog({ open, onOpenChange }: { open: boolean, onOpenCha
 
         createPlaylist({ body: { title: playlistNameRef.current.value } })
     }, [createPlaylist, playlistNameRef])
-    
+
     return (<Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>
             <form onSubmit={onSubmit}>
@@ -37,7 +37,7 @@ function CreatePlaylistDialog({ open, onOpenChange }: { open: boolean, onOpenCha
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit">{isLoading ? "Creating..." : "Create Playlist"}</Button>
+                    <Button disabled={isLoading} type="submit">{isLoading ? "Creating..." : "Create Playlist"}</Button>
                 </DialogFooter>
             </form>
         </DialogContent>
