@@ -18,7 +18,7 @@ function CreatePlaylistDialog({ open, onOpenChange }: { open: boolean, onOpenCha
         event.preventDefault();
         if (!playlistNameRef.current?.value) return;
 
-        createPlaylist({ body: { title: playlistNameRef.current.value } })
+        createPlaylist({ body: { name: playlistNameRef.current.value } })
     }, [createPlaylist, playlistNameRef])
 
     return (<Dialog open={open} onOpenChange={onOpenChange}>

@@ -8,6 +8,13 @@
       "when": 1690982897930,
       "tag": "0000_large_spirit",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1691131078964,
+      "tag": "0001_living_mariko_yashida",
+      "breakpoints": true
     }
   ]
 }
