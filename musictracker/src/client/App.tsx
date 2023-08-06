@@ -3,30 +3,13 @@ import './App.css'
 import { Menu } from './components/menu'
 import { Sidebar } from './components/sidebar'
 import { Outlet } from '@tanstack/router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import queryClient from './query-client';
 
-const queryClient = new QueryClient();
 function App() {
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <div className="md:hidden">
-          <img
-            src="/examples/music-light.png"
-            width={1280}
-            height={1114}
-            alt="Music"
-            className="block dark:hidden"
-          />
-          <img
-            src="/examples/music-dark.png"
-            width={1280}
-            height={1114}
-            alt="Music"
-            className="hidden dark:block"
-          />
-        </div>
         <div className="hidden md:block">
           <Menu />
           <div className="border-t">

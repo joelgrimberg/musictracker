@@ -6,7 +6,7 @@ const c = initContract();
 
 const PlaylistSchema = z.object({
     id: z.number(),
-    title: z.string(),
+    name: z.string(),
 });
 
 export const contract = c.router({
@@ -17,7 +17,7 @@ export const contract = c.router({
             201: PlaylistSchema,
         },
         body: z.object({
-            title: z.string()
+            name: z.string()
         }),
         summary: 'Create a post',
     },

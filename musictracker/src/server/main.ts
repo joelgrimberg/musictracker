@@ -29,7 +29,7 @@ const router = s.router(contract, {
     }
   },
   createPlaylist: async ({ body: playlist }) => {
-    const created = db.insert(playlists).values(playlist).returning({ id: playlists.id, title: playlists.title }).get()
+    const created = db.insert(playlists).values(playlist).returning({ id: playlists.id, name: playlists.name }).get()
     return { status: 201, body: created }
   }
 });
