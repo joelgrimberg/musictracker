@@ -31,6 +31,12 @@ const router = s.router(contract, {
   createPlaylist: async ({ body: playlist }) => {
     const created = db.insert(playlists).values(playlist).returning({ id: playlists.id, name: playlists.name }).get()
     return { status: 201, body: created }
+  },
+  addMusicTrack: async () => {
+    return { status: 400, body: { message: 'Not implemented yet' } }
+  },
+  getMetaForMedia: async () => {
+    return { status: 200, body: { title: "" } }
   }
 });
 
