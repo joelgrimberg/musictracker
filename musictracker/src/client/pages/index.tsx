@@ -1,12 +1,11 @@
-import { Button } from '../components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Separator } from '@radix-ui/react-menubar'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { ScrollBar } from '../components/ui/scroll-area'
-import { PlusCircledIcon } from "@radix-ui/react-icons"
 import { listenNowAlbums, madeForYouAlbums } from '../data/albums'
 import { AlbumArtwork } from '../components/album-artwork'
 import { PodcastEmptyPlaceholder } from '../components/podcast-empty-placeholder'
+import AddMusicDialog from '@/components/dialogs/add-music-dialog'
 
 export function Index() {
     return <>
@@ -22,10 +21,7 @@ export function Index() {
                     </TabsTrigger>
                 </TabsList>
                 <div className="ml-auto mr-4">
-                    <Button>
-                        <PlusCircledIcon className="mr-2 h-4 w-4" />
-                        Add music
-                    </Button>
+                    <AddMusicDialog />
                 </div>
             </div>
             <TabsContent
