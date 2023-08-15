@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '../ui/button'
 import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { useForm, useWatch } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { TrackSources } from '../../../contract'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -36,33 +36,23 @@ function AddMusicDialog() {
     const form = useForm<TrackFormValues>({
         resolver: zodResolver(trackFormSchema),
         defaultValues,
-        mode: "onChange"
+        mode: "onChange",
     });
-    const url = form.watch('url');
-    const { watch, getFieldState, setValue } = form;
+    const url = form.watch("url");
+    const source = form.watch('source')
+    const urlState = form.getFieldState("url")
     useEffect(() => {
-        const subscription = watch(({ url, source }, { name, type }) => {
-            if (name === "url") {
-                console.log(url)
-                console.log(type)
-                console.log(fieldState)
-                if (!fieldState.invalid && fieldState.isTouched) {
-                    console.log('getting meta')
-                    client.getMetaForMedia.query({ query: { source, url } }).then(({ body, status }) => {
-                        if (status === 200) {
-                            if (body.artist) {
-                                setValue('artist', body.artist);
-                            }
-                            setValue('title', body.title)
-                        }
-                    })
+        if (!urlState.invalid && urlState.isTouched && url != '') {
+            client.getMetaForMedia.query({ query: { source, url } }).then(({ body, status }) => {
+                if (status === 200) {
+                    if (body.artist) {
+                        form.setValue('artist', body.artist);
+                    }
+                    form.setValue('title', body.title)
                 }
-
-            }
-
-        })
-        return () => subscription.unsubscribe()
-    }, [watch, getFieldState, setValue])
+            })
+        }
+    }, [urlState, url, source, form]);
 
     const onSubmit = (values: TrackFormValues) => {
         console.log({ values })
