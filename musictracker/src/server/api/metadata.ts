@@ -7,6 +7,8 @@ const oEmbedResponse = z.object({
     author_name: z.string().optional(),
     html: z.string(),
 })
+export class MetadataNotFoundError extends Error { }
+
 function getOEmbedUrlForSource(url: string, source: TrackSources): string {
     switch (source) {
         case TrackSources.Spotify:
@@ -19,10 +21,10 @@ export async function getMetadataForUrl(mediaUrl: string, source: TrackSources) 
     try {
         const url = getOEmbedUrlForSource(mediaUrl, source);
         const response = await fetch(url);
-        const json = await response.json() ;
+        const json = await response.json();
 
         if (json.error) {
-            throw Error("Could not fetch metadata for URL");
+            throw new MetadataNotFoundError("Could not fetch metadata for URL");
         }
         const { title, author_name, thumbnail_url } = oEmbedResponse.parse(json);
 

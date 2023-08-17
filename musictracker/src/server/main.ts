@@ -6,7 +6,7 @@ import ViteExpress from "vite-express";
 import db from "./db";
 import { playlists } from "./schema";
 import { eq } from "drizzle-orm";
-import { getMetadataForUrl } from "./api/metadata";
+import { MetadataNotFoundError, getMetadataForUrl } from "./api/metadata";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,7 +41,10 @@ const router = s.router(contract, {
       const metadata = await getMetadataForUrl(url, source)
       return { status: 200, body: metadata }
     } catch (e) {
-      return { status: 404, body: { message: `${e}` } }
+      if (e instanceof MetadataNotFoundError) {
+        return { status: 404, body: { message: `${e}` } }
+      }
+      return { status: 500, body: { message: `${e}`} }
     }
   }
 });

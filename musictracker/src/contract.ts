@@ -86,7 +86,8 @@ export const contract = c.router({
                 artist: z.string().optional(),
                 coverUrl: z.string().optional()
             }),
-            404: c.type<{ message: string }>()
+            404: c.type<{ message: string }>(),
+            500: c.type<{message: string}>()
         },
         summary: 'Get metadata for a specific media URL for a source'
     }

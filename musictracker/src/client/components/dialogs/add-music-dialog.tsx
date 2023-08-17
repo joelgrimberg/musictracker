@@ -55,7 +55,7 @@ function AddMusicDialog() {
                         form.setValue('title', body.title, { shouldTouch: false })
                         form.setValue('coverUrl', body.coverUrl, { shouldTouch: false })
                     }
-                    if (status === 404) {
+                    if (status === 404 || status === 500) {
                         form.setError('url', { message: body.message });
                     }
                 })
