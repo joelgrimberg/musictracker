@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '../ui/button'
 import { PlusCircledIcon } from '@radix-ui/react-icons'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { TrackSources } from '../../../contract'
@@ -10,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { useEffect } from 'react'
 import { client } from '@/client'
+import { Separator } from '../ui/separator'
 
 const trackFormSchema = z.object({
     url: z.string().url(),
@@ -22,6 +22,7 @@ const trackFormSchema = z.object({
             message: "Track title must not be longer than 80 characters.",
         }),
     artist: z.string().optional(),
+    coverUrl: z.string().url().optional(),
     source: z.nativeEnum(TrackSources)
 });
 
@@ -40,19 +41,26 @@ function AddMusicDialog() {
     });
     const url = form.watch("url");
     const source = form.watch('source')
+    const title = form.watch('title');
     const urlState = form.getFieldState("url")
+
     useEffect(() => {
-        if (!urlState.invalid && urlState.isTouched && url != '') {
-            client.getMetaForMedia.query({ query: { source, url } }).then(({ body, status }) => {
-                if (status === 200) {
-                    if (body.artist) {
-                        form.setValue('artist', body.artist);
+        if (!urlState.invalid && url != '' && title == '') {
+            client.getMetaForMedia.query({ query: { source, url } })
+                .then(({ body, status }) => {
+                    if (status === 200) {
+                        if (body.artist) {
+                            form.setValue('artist', body.artist, { shouldTouch: false });
+                        }
+                        form.setValue('title', body.title, { shouldTouch: false })
+                        form.setValue('coverUrl', body.coverUrl, { shouldTouch: false })
                     }
-                    form.setValue('title', body.title)
-                }
-            })
+                    if (status === 404) {
+                        form.setError('url', { message: body.message });
+                    }
+                })
         }
-    }, [urlState, url, source, form]);
+    }, [urlState, url, source, title, form]);
 
     const onSubmit = (values: TrackFormValues) => {
         console.log({ values })
@@ -70,62 +78,23 @@ function AddMusicDialog() {
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-                        <Tabs defaultValue={TrackSources.YouTube} className="space-y-6" onValueChange={(value) => { form.setValue('source', value as TrackSources) }}>
-                            <div className="space-between flex items-center">
-                                <TabsList >
-                                    <TabsTrigger value={TrackSources.YouTube} className="relative" >
-                                        YouTube music video
-                                    </TabsTrigger>
-                                    <TabsTrigger value={TrackSources.Spotify} className="relative">
-                                        Spotify
-                                    </TabsTrigger>
-                                    <TabsTrigger value="local" className="relative">
-                                        Local file
-                                    </TabsTrigger>
-                                </TabsList>
-                            </div>
-
-                            <TabsContent
-                                value={TrackSources.YouTube}
-                                className="border-none p-0 outline-none"
-                            >
-                                <FormField
-                                    control={form.control}
-                                    name="url"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>YouTube Video URL</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                This is the URL of a YouTube video you want to use.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                            </TabsContent>
-                            <TabsContent value={TrackSources.Spotify} className="border-none p-0 outline-none">
-                                <FormField
-                                    control={form.control}
-                                    name="url"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Spotify Song URL</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="https://open.spotify.com/track/6GQLX6Z28fYwDNCrhaKzYF?si=7861c9c8867f4935" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                This is the URL of a Spotify Song you want to use.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </TabsContent>
-                        </Tabs>
+                        <FormField
+                            control={form.control}
+                            name="url"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>YouTube Video URL</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        This is the URL of a YouTube video you want to use.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Separator />
                         <FormField
                             control={form.control}
                             name="title"
@@ -147,6 +116,22 @@ function AddMusicDialog() {
                                     <FormLabel>Artist</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Rick Astley" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="coverUrl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Album cover URL:</FormLabel>
+                                    <FormControl>
+                                        <div className='flex gap-2 items-center'>
+                                            <img src={field.value} className='w-20 h-auto' title='cover image' />
+                                            <Input placeholder="http://img/albumcover-picture.jpg" {...field} />
+                                        </div>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
