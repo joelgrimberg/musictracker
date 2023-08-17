@@ -6,6 +6,7 @@ import ViteExpress from "vite-express";
 import db from "./db";
 import { playlists } from "./schema";
 import { eq } from "drizzle-orm";
+import { getMetadataForUrl } from "./api/metadata";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,8 +36,13 @@ const router = s.router(contract, {
   addMusicTrack: async () => {
     return { status: 400, body: { message: 'Not implemented yet' } }
   },
-  getMetaForMedia: async () => {
-    return { status: 200, body: { title: "" } }
+  getMetaForMedia: async ({ query: { url, source } }) => {
+    try {
+      const metadata = await getMetadataForUrl(url, source)
+      return { status: 200, body: metadata }
+    } catch (e) {
+      return { status: 404, body: { message: `${e}` } }
+    }
   }
 });
 

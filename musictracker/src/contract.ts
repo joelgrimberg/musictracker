@@ -20,6 +20,7 @@ const TrackSchema = z.object({
     title: z.string(),
     artist: z.string().optional(),
     url: z.string().url(),
+    coverUrl: z.string().url().optional(),
     /**
      * @type {string} - UTC timestamp in milliseconds
      */
@@ -82,7 +83,8 @@ export const contract = c.router({
         responses: {
             200: z.object({
                 title: z.string(),
-                artist: z.string().optional()
+                artist: z.string().optional(),
+                coverUrl: z.string().optional()
             }),
             404: c.type<{ message: string }>()
         },
