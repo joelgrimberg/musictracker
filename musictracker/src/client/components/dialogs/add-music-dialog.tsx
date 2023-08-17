@@ -10,7 +10,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useEffect } from 'react'
 import { client } from '@/client'
 import { Separator } from '../ui/separator'
-
+import albumCoverPlaceholderImage from '../../assets/cover-placeholder.png'
 const trackFormSchema = z.object({
     url: z.string().url(),
     title: z
@@ -43,6 +43,7 @@ function AddMusicDialog() {
     const source = form.watch('source')
     const title = form.watch('title');
     const urlState = form.getFieldState("url")
+    const coverUrlState = form.getFieldState('coverUrl');
 
     useEffect(() => {
         if (!urlState.invalid && url != '' && title == '') {
@@ -50,10 +51,10 @@ function AddMusicDialog() {
                 .then(({ body, status }) => {
                     if (status === 200) {
                         if (body.artist) {
-                            form.setValue('artist', body.artist, { shouldTouch: false });
+                            form.setValue('artist', body.artist, { shouldTouch: false, shouldValidate: true });
                         }
-                        form.setValue('title', body.title, { shouldTouch: false })
-                        form.setValue('coverUrl', body.coverUrl, { shouldTouch: false })
+                        form.setValue('title', body.title, { shouldTouch: false, shouldValidate: true })
+                        form.setValue('coverUrl', body.coverUrl, { shouldTouch: false, shouldValidate: true })
                     }
                     if (status === 404 || status === 500) {
                         form.setError('url', { message: body.message });
@@ -129,7 +130,9 @@ function AddMusicDialog() {
                                     <FormLabel>Album cover URL:</FormLabel>
                                     <FormControl>
                                         <div className='flex gap-2 items-center'>
-                                            <img src={field.value} className='w-20 h-auto' title='cover image' />
+                                            {(!field.value || coverUrlState.invalid) ?
+                                                <img alt="placeholder" src={albumCoverPlaceholderImage} className='w-20 h-auto' /> :
+                                                <img alt="album cover image" src={field.value} className='w-20 h-auto' />}
                                             <Input placeholder="http://img/albumcover-picture.jpg" {...field} />
                                         </div>
                                     </FormControl>
