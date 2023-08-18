@@ -65,7 +65,8 @@ export const contract = c.router({
             source: TrackSource,
             title: z.string(),
             artist: z.string().optional(),
-            url: z.string().optional()
+            url: z.string().url(),
+            coverUrl: z.string().url(),
         }),
         responses: {
             201: TrackSchema,
