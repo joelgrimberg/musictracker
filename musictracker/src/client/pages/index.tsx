@@ -5,7 +5,9 @@ import { ScrollBar } from '../components/ui/scroll-area'
 import { listenNowAlbums, madeForYouAlbums } from '../data/albums'
 import { AlbumArtwork } from '../components/album-artwork'
 import { PodcastEmptyPlaceholder } from '../components/podcast-empty-placeholder'
-import AddMusicDialog from '@/components/dialogs/add-music-dialog'
+import { Link, Outlet } from '@tanstack/router'
+import { PlusCircledIcon } from '@radix-ui/react-icons'
+import { buttonVariants } from '@/components/ui/button'
 
 export function Index() {
     return <>
@@ -21,7 +23,10 @@ export function Index() {
                     </TabsTrigger>
                 </TabsList>
                 <div className="ml-auto mr-4">
-                    <AddMusicDialog />
+                    <Link className={buttonVariants()} to="/add-track">
+                        <PlusCircledIcon className="mr-2 h-4 w-4" />
+                        Add music
+                    </Link>
                 </div>
             </div>
             <TabsContent
@@ -101,5 +106,6 @@ export function Index() {
                 <PodcastEmptyPlaceholder />
             </TabsContent>
         </Tabs>
+        <Outlet />
     </>
 }

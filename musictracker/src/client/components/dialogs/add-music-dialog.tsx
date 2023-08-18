@@ -1,7 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Button, buttonVariants } from '../ui/button'
-import { PlusCircledIcon } from '@radix-ui/react-icons'
+import { Button } from '../ui/button'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { TrackSources } from '../../../contract'
@@ -11,6 +10,7 @@ import { useEffect } from 'react'
 import { client } from '@/client'
 import { Separator } from '../ui/separator'
 import albumCoverPlaceholderImage from '../../assets/cover-placeholder.png'
+import { useNavigate } from '@tanstack/router'
 const trackFormSchema = z.object({
     url: z.string().url(),
     title: z
@@ -29,11 +29,17 @@ const trackFormSchema = z.object({
 type TrackFormValues = z.infer<typeof trackFormSchema>;
 const defaultValues: Partial<TrackFormValues> = {
     source: TrackSources.YouTube,
-    artist: "",
     url: "",
-    title: ""
+    title: "",
+    artist: "",
+    coverUrl: ""
 }
 function AddMusicDialog() {
+    const { mutate } = client.addMusicTrack.useMutation({
+        onSuccess: () => {
+            navigate({ to: "..", replace: true })
+        }
+    })
     const form = useForm<TrackFormValues>({
         resolver: zodResolver(trackFormSchema),
         defaultValues,
@@ -64,14 +70,15 @@ function AddMusicDialog() {
     }, [urlState, url, source, title, form]);
 
     const onSubmit = (values: TrackFormValues) => {
-        console.log({ values })
+        mutate({ body: values })
     }
+    const navigate = useNavigate()
     return (
-        <Dialog>
-            <DialogTrigger className={buttonVariants()}>
-                <PlusCircledIcon className="mr-2 h-4 w-4" />
-                Add music
-            </DialogTrigger>
+        <Dialog open={true} onOpenChange={(open) => {
+            if (!open) {
+                navigate({ to: ".." })
+            }
+        }}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Add Music</DialogTitle>
