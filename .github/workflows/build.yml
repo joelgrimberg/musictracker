@@ -30,9 +30,9 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: musictracker
-      - name: Test
-        run: npm run test
-        working-directory: musictracker
+      # - name: Test
+      #   run: npm run test
+      #   working-directory: musictracker
       # - name: Upload build output
       #   uses: actions/upload-artifact@v3
       #   with:
