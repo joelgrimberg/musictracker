@@ -33,7 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cors": "^2.8.5",
-    "drizzle-orm": "^0.27.2",
+    "drizzle-orm": "^0.28.2",
     "express": "^4.18.2",
     "lucide-react": "^0.263.1",
     "postcss": "^8.4.28",
