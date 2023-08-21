@@ -26,6 +26,7 @@
     "@tanstack/react-router": "0.0.1-beta.151",
     "@tanstack/react-actions": "0.0.1-beta.169",
     "@tanstack/react-loaders": "0.0.1-beta.151",
+    "@tanstack/react-table": "^8.9.3",
     "@ts-rest/core": "^3.26.4",
     "@ts-rest/express": "^3.26.4",
     "@ts-rest/react-query": "^3.26.4",
