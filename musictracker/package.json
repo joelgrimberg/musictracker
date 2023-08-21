@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "generate-migrations": "drizzle-kit generate:sqlite",
-    "migrate": "drizzle-kit push:sqlite"
+    "migrate": "drizzle-kit push:sqlite",
+    "test": "echo \"Error: no test specified yet\" && exit 1"
   },
   "dependencies": {
     "@radix-ui/react-context-menu": "^2.1.4",
@@ -24,6 +25,7 @@
     "@ts-rest/core": "^3.26.4",
     "@ts-rest/express": "^3.26.4",
     "@ts-rest/react-query": "^3.26.4",
+    "autoprefixer": "^10.4.15",
     "better-sqlite3": "^8.5.0",
     "body-parser": "^1.20.2",
     "class-variance-authority": "^0.7.0",
@@ -32,9 +34,11 @@
     "drizzle-orm": "^0.27.2",
     "express": "^4.18.2",
     "lucide-react": "^0.263.1",
+    "postcss": "^8.4.28",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0",
+    "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.6",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
