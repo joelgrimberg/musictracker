@@ -1,4 +1,4 @@
-name: Frontend check
+name: MusicTracker build
 
 on:
   push:
