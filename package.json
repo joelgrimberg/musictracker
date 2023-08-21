@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=musictracker",
+    "build": "npm run build --workspace=musictracker",
     "prettier": "npx prettier --write .",
     "prepare": "husky install",
     "lint": "npm run lint --workspace=musictracker"

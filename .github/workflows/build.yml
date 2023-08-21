@@ -20,16 +20,12 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: musictracker/package-lock.json
       - name: Install dependencies
         run: npm ci
-        working-directory: musictracker
       - name: Run ESLint
         run: npm run lint
-        working-directory: musictracker
       - name: Build
         run: npm run build
-        working-directory: musictracker
       # - name: Test
       #   run: npm run test
       #   working-directory: musictracker
