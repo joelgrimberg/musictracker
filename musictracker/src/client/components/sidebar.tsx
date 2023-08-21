@@ -1,15 +1,14 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { Link } from "@tanstack/router"
-import { client } from "@/client"
+import { Link } from "@tanstack/react-router";
+import { client } from "@/client";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-}
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
-  const { isLoading, data } = client.getPlaylists.useQuery(['playlists'])
+  const { isLoading, data } = client.getPlaylists.useQuery(["playlists"]);
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -176,7 +175,9 @@ export function Sidebar({ className }: SidebarProps) {
           <ScrollArea className="h-[300px] px-1">
             <div className="space-y-1 p-2">
               {isLoading && "Loading playlists..."}
-              {data?.body?.length === 0 ? <p className="font-normal text-sm">No playlists yet...</p> :
+              {data?.body?.length === 0 ? (
+                <p className="font-normal text-sm">No playlists yet...</p>
+              ) : (
                 data?.body?.map((playlist) => (
                   <Button
                     key={`playlist-${playlist?.id}`}
@@ -201,11 +202,12 @@ export function Sidebar({ className }: SidebarProps) {
                     </svg>
                     {playlist?.name}
                   </Button>
-                ))}
+                ))
+              )}
             </div>
           </ScrollArea>
         </div>
       </div>
     </div>
-  )
+  );
 }

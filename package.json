@@ -2,24 +2,25 @@
   "name": "training-app",
   "private": true,
   "workspaces": [
-    "tabtracker",
+    "musictracker",
     "cypress-js",
     "cypress-ts",
     "playwright"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=tabtracker",
-    "db:push": "npm run db:push --workspace=tabtracker",
-    "db:generate": "npm run db:generate --workspace=tabtracker",
+    "dev": "npm run dev --workspace=musictracker",
+    "build": "npm run build --workspace=musictracker",
     "prettier": "npx prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "npm run lint --workspace=musictracker"
   },
   "devDependencies": {
     "husky": "^8.0.3"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "npx prettier --write"
+      "npx prettier --write",
+      "npm run lint --workspace=musictracker"
     ]
   }
 }
