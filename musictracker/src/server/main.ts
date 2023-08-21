@@ -4,8 +4,10 @@ import express from "express";
 import { contract } from "../contract";
 import ViteExpress from "vite-express";
 import db from "./db";
-import { playlists } from "./schema";
+import { playlists, tracks } from "./schema";
 import { eq } from "drizzle-orm";
+import { MetadataNotFoundError, getMetadataForUrl } from "./api/metadata";
+import { mapNullableValuesToOptionals } from "./utils";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +33,22 @@ const router = s.router(contract, {
   createPlaylist: async ({ body: playlist }) => {
     const created = db.insert(playlists).values(playlist).returning({ id: playlists.id, name: playlists.name }).get()
     return { status: 201, body: created }
+  },
+  addMusicTrack: async ({ body: track }) => {
+    const createdTrack = db.insert(tracks).values(track).returning().get();
+
+    return { status: 201, body: mapNullableValuesToOptionals(createdTrack) };
+  },
+  getMetaForMedia: async ({ query: { url, source } }) => {
+    try {
+      const metadata = await getMetadataForUrl(url, source)
+      return { status: 200, body: metadata }
+    } catch (e) {
+      if (e instanceof MetadataNotFoundError) {
+        return { status: 404, body: { message: `${e}` } }
+      }
+      return { status: 500, body: { message: `${e}` } }
+    }
   }
 });
 

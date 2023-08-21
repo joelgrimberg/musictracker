@@ -9,6 +9,23 @@ const PlaylistSchema = z.object({
     name: z.string(),
 });
 
+export enum TrackSources {
+    Spotify = "spotify",
+    YouTube = "youtube"
+}
+const TrackSource = z.nativeEnum(TrackSources);
+const TrackSchema = z.object({
+    id: z.number(),
+    source: TrackSource,
+    title: z.string(),
+    artist: z.string().optional(),
+    url: z.string().url(),
+    coverUrl: z.string().url().optional(),
+    /**
+     * @type {string} - UTC timestamp in milliseconds
+     */
+    createdAt: z.string()
+})
 export const contract = c.router({
     createPlaylist: {
         method: 'POST',
@@ -39,5 +56,33 @@ export const contract = c.router({
         },
         summary: 'Get a all playlist',
 
+    },
+    addMusicTrack: {
+        method: 'POST',
+        path: '/tracks',
+        body: TrackSchema.omit({ id: true, createdAt: true}),
+        responses: {
+            201: TrackSchema,
+            400: c.type<{ message: string }>()
+        },
+        summary: 'Add a music track to your collection'
+    },
+    getMetaForMedia: {
+        method: 'GET',
+        path: '/meta',
+        query: z.object({
+            source: TrackSource,
+            url: z.string().url()
+        }),
+        responses: {
+            200: z.object({
+                title: z.string(),
+                artist: z.string().optional(),
+                coverUrl: z.string().optional()
+            }),
+            404: c.type<{ message: string }>(),
+            500: c.type<{ message: string }>()
+        },
+        summary: 'Get metadata for a specific media URL for a source'
     }
-}, {pathPrefix: '/api'});
+}, { pathPrefix: '/api' });
