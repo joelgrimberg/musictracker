@@ -8,6 +8,16 @@ const dateFormatter = new Intl.DateTimeFormat("en", {
 
 export const columns: ColumnDef<z.infer<typeof TrackSchema>>[] = [
   {
+    id: "coverUrl",
+    accessorKey: "coverUrl",
+    header: undefined,
+    cell: ({ row }) => {
+      const coverUrl = row.getValue<string>("coverUrl");
+      console.log(coverUrl);
+      return <img src={coverUrl} className="w-12" />;
+    },
+  },
+  {
     accessorKey: "title",
     header: "Title",
   },
