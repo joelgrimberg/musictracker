@@ -14,7 +14,13 @@ export const columns: ColumnDef<z.infer<typeof TrackSchema>>[] = [
     header: undefined,
     cell: ({ row }) => {
       const coverUrl = row.getValue<string>("coverUrl");
-      return <img src={coverUrl} className="w-12" />;
+      return (
+        <img
+          src={coverUrl}
+          alt={`cover image of ${row.getValue("title")}`}
+          className="w-12"
+        />
+      );
     },
   },
   {
