@@ -8,7 +8,7 @@
     "start": "npm run build --workspace=tabtracker && npm run start --workspace=tabtracker"
   },
   "devDependencies": {
-    "cypress": "^12.4.1"
+    "cypress": "^12.17.4"
   },
   "dependencies": {
     "start-server-and-test": "^1.15.3"
