@@ -8,7 +8,7 @@
     "start": "npm run build --workspace=tabtracker && npm run start --workspace=tabtracker"
   },
   "devDependencies": {
-    "cypress": "^12.17.4",
+    "cypress": "^13.2.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {
