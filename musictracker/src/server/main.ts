@@ -3,17 +3,19 @@ import bodyParser from "body-parser";
 import express from "express";
 import { contract } from "../contract";
 import ViteExpress from "vite-express";
-import db from "./db";
-import { playlists, tracks } from "./schema";
+import { playlistTracks, playlists, tracks } from "./schema";
 import { eq } from "drizzle-orm";
 import { MetadataNotFoundError, getMetadataForUrl } from "./api/metadata";
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import * as schema from "./schema";
+import { sqlite } from "./db";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const s = initServer();
-
+const db = drizzle(sqlite, { schema });
 const router = s.router(contract, {
   getPlaylist: async ({ params: { id } }) => {
     if (!Number.isInteger(+id))
@@ -38,6 +40,15 @@ const router = s.router(contract, {
       status: 200,
       body: result,
     };
+  },
+  addTrackToPlaylist: async ({ params: { id }, body: { id: trackId } }) => {
+    if (!Number.isInteger(+id))
+      return {
+        status: 400,
+        body: { message: "Invalid request, id should be a number" },
+      };
+    db.insert(playlistTracks).values({ playlistId: +id, trackId }).run();
+    return { status: 201, body: { success: true } };
   },
   createPlaylist: async ({ body: playlist }) => {
     const created = db

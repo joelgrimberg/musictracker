@@ -56,6 +56,16 @@ export const contract = c.router(
       },
       summary: "Get a all playlist",
     },
+    addTrackToPlaylist: {
+      method: "POST",
+      path: `/playlists/:id/tracks`,
+      body: TrackSchema.pick({ id: true }),
+      responses: {
+        201: c.type<{ success: true }>(),
+        404: c.type<{ message: string }>(),
+        400: c.type<{ message: string }>(),
+      },
+    },
     addMusicTrack: {
       method: "POST",
       path: "/tracks",
