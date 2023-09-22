@@ -47,7 +47,6 @@ const router = s.router(contract, {
         status: 400,
         body: { message: "Invalid request, id should be a number" },
       };
-    // db.query.tracks.findFirst({ where: eq(playlists.id, +id), columns: { id: true } })
     db.insert(playlistTracks).values({ playlistId: +id, trackId }).run();
     return { status: 201, body: { success: true } };
   },
