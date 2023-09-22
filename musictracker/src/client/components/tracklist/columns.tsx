@@ -60,6 +60,8 @@ export const columns: ColumnDef<z.infer<typeof TrackSchema>>[] = [
       const { isLoading, data: playlists } = client.getPlaylists.useQuery([
         "playlists",
       ]);
+      const { mutate: addTrackToPlaylist } =
+        client.addTrackToPlaylist.useMutation();
 
       return (
         <DropdownMenu>
@@ -80,7 +82,15 @@ export const columns: ColumnDef<z.infer<typeof TrackSchema>>[] = [
               <DropdownMenuSubContent className="w-48">
                 {!isLoading &&
                   playlists?.body.map((playlist) => (
-                    <DropdownMenuItem key={playlist?.id}>
+                    <DropdownMenuItem
+                      key={playlist?.id}
+                      onClick={() =>
+                        addTrackToPlaylist({
+                          params: { id: `${playlist?.id}` },
+                          body: { id: track.id },
+                        })
+                      }
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
