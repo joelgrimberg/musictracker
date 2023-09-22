@@ -10,6 +10,6 @@
 ## Setup
 ```bash
 npm install # install project dependencies
-npm run db:push # run database migrations
+npm run migrate # run database migrations
 npm run dev # start vite dev server and expressjs server
 ```
