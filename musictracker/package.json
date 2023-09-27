@@ -31,7 +31,7 @@
     "@ts-rest/core": "^3.26.4",
     "@ts-rest/express": "^3.26.4",
     "@ts-rest/react-query": "^3.26.4",
-    "autoprefixer": "^10.4.15",
+    "autoprefixer": "^10.4.16",
     "better-sqlite3": "^8.5.0",
     "body-parser": "^1.20.2",
     "class-variance-authority": "^0.7.0",
