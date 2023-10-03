@@ -9,7 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "generate-migrations": "drizzle-kit generate:sqlite",
     "migrate": "drizzle-kit push:sqlite",
-    "test": "echo \"Error: no test specified yet\" && exit 1"
+    "cypress:ci": "cypress run",
+    "test": "cypress run",
+    "start-test": "start-server-and-test start http://localhost:3000 test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
@@ -61,11 +63,13 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.4",
+    "cypress": "^13.3.0",
     "drizzle-kit": "^0.19.12",
     "eslint": "^8.50.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "nodemon": "^3.0.1",
+    "start-server-and-test": "^2.0.1",
     "vite": "^4.0.4"
   }
 }
