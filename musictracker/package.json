@@ -8,10 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "generate-migrations": "drizzle-kit generate:sqlite",
-    "migrate": "drizzle-kit push:sqlite",
-    "cypress:ci": "cypress run",
-    "test": "cypress run",
-    "start-test": "start-server-and-test start http://localhost:3000 test"
+    "migrate": "drizzle-kit push:sqlite"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
@@ -60,7 +57,7 @@
     "@types/node": "^18.11.18",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.0.10",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.4",
     "cypress": "^13.3.0",
