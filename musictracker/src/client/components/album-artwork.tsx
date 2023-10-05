@@ -1,6 +1,6 @@
-import { PlusCircledIcon } from "@radix-ui/react-icons"
+import { PlusCircledIcon } from '@radix-ui/react-icons'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 import {
     ContextMenu,
     ContextMenuContent,
@@ -10,28 +10,28 @@ import {
     ContextMenuSubContent,
     ContextMenuSubTrigger,
     ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+} from '@/components/ui/context-menu'
 
-import { Album } from "../data/albums"
-import { playlists } from "../data/playlists"
+import { Album } from '../data/albums'
+import { playlists } from '../data/playlists'
 
 interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
     album: Album
-    aspectRatio?: "portrait" | "square"
+    aspectRatio?: 'portrait' | 'square'
     width?: number
     height?: number
 }
 
 export function AlbumArtwork({
     album,
-    aspectRatio = "portrait",
+    aspectRatio = 'portrait',
     width,
     height,
     className,
     ...props
 }: AlbumArtworkProps) {
     return (
-        <div className={cn("space-y-3", className)} {...props}>
+        <div className={cn('space-y-3', className)} {...props}>
             <ContextMenu>
                 <ContextMenuTrigger>
                     <div className="overflow-hidden rounded-md">
@@ -41,8 +41,10 @@ export function AlbumArtwork({
                             width={width}
                             height={height}
                             className={cn(
-                                "h-auto w-auto object-cover transition-all hover:scale-105",
-                                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+                                'h-auto w-auto object-cover transition-all hover:scale-105',
+                                aspectRatio === 'portrait'
+                                    ? 'aspect-[3/4]'
+                                    : 'aspect-square'
                             )}
                         />
                     </div>
@@ -50,7 +52,9 @@ export function AlbumArtwork({
                 <ContextMenuContent className="w-40">
                     <ContextMenuItem>Add to Library</ContextMenuItem>
                     <ContextMenuSub>
-                        <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
+                        <ContextMenuSubTrigger>
+                            Add to Playlist
+                        </ContextMenuSubTrigger>
                         <ContextMenuSubContent className="w-48">
                             <ContextMenuItem>
                                 <PlusCircledIcon className="mr-2 h-4 w-4" />

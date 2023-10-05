@@ -13,24 +13,27 @@ import {
     MenubarSubContent,
     MenubarSubTrigger,
     MenubarTrigger,
-} from "@/components/ui/menubar"
-import { useState } from "react"
-import CreatePlaylistDialog from "./dialogs/create-playlist-dialog"
+} from '@/components/ui/menubar'
+import { useState } from 'react'
+import CreatePlaylistDialog from './dialogs/create-playlist-dialog'
 
 enum MenuDialogs {
-    CreatePlaylistDialog
+    CreatePlaylistDialog,
 }
 export function Menu() {
     const [dialogs, setDialogs] = useState<Record<MenuDialogs, boolean>>({
-        [MenuDialogs.CreatePlaylistDialog]: false
+        [MenuDialogs.CreatePlaylistDialog]: false,
     })
-    const isDialogOpen = (dialog: MenuDialogs): boolean => dialogs[dialog];
-    const toggleDialog = (dialog: MenuDialogs) => setDialogs((dialogs) => ({ ...dialogs, [dialog]: !dialogs[dialog] }))
+    const isDialogOpen = (dialog: MenuDialogs): boolean => dialogs[dialog]
+    const toggleDialog = (dialog: MenuDialogs) =>
+        setDialogs((dialogs) => ({ ...dialogs, [dialog]: !dialogs[dialog] }))
     return (
         <>
             <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
                 <MenubarMenu>
-                    <MenubarTrigger className="font-bold">MusicTracker</MenubarTrigger>
+                    <MenubarTrigger className="font-bold">
+                        MusicTracker
+                    </MenubarTrigger>
                     <MenubarContent>
                         <MenubarItem>About Music</MenubarItem>
                         <MenubarSeparator />
@@ -42,7 +45,8 @@ export function Menu() {
                             Hide Music... <MenubarShortcut>⌘H</MenubarShortcut>
                         </MenubarItem>
                         <MenubarItem>
-                            Hide Others... <MenubarShortcut>⇧⌘H</MenubarShortcut>
+                            Hide Others...{' '}
+                            <MenubarShortcut>⇧⌘H</MenubarShortcut>
                         </MenubarItem>
                         <MenubarShortcut />
                         <MenubarItem>
@@ -56,21 +60,33 @@ export function Menu() {
                         <MenubarSub>
                             <MenubarSubTrigger>New</MenubarSubTrigger>
                             <MenubarSubContent className="w-[230px]">
-                                <MenubarItem onClick={() => toggleDialog(MenuDialogs.CreatePlaylistDialog)}>
-                                    Playlist <MenubarShortcut>⌘N</MenubarShortcut>
+                                <MenubarItem
+                                    onClick={() =>
+                                        toggleDialog(
+                                            MenuDialogs.CreatePlaylistDialog
+                                        )
+                                    }
+                                >
+                                    Playlist{' '}
+                                    <MenubarShortcut>⌘N</MenubarShortcut>
                                 </MenubarItem>
                                 <MenubarItem disabled>
-                                    Playlist from Selection <MenubarShortcut>⇧⌘N</MenubarShortcut>
+                                    Playlist from Selection{' '}
+                                    <MenubarShortcut>⇧⌘N</MenubarShortcut>
                                 </MenubarItem>
                                 <MenubarItem>
-                                    Smart Playlist... <MenubarShortcut>⌥⌘N</MenubarShortcut>
+                                    Smart Playlist...{' '}
+                                    <MenubarShortcut>⌥⌘N</MenubarShortcut>
                                 </MenubarItem>
                                 <MenubarItem>Playlist Folder</MenubarItem>
-                                <MenubarItem disabled>Genius Playlist</MenubarItem>
+                                <MenubarItem disabled>
+                                    Genius Playlist
+                                </MenubarItem>
                             </MenubarSubContent>
                         </MenubarSub>
                         <MenubarItem>
-                            Open Stream URL... <MenubarShortcut>⌘U</MenubarShortcut>
+                            Open Stream URL...{' '}
+                            <MenubarShortcut>⌘U</MenubarShortcut>
                         </MenubarItem>
                         <MenubarItem>
                             Close Window <MenubarShortcut>⌘W</MenubarShortcut>
@@ -86,20 +102,27 @@ export function Menu() {
                                 <MenubarItem>Export Library...</MenubarItem>
                                 <MenubarSeparator />
                                 <MenubarItem>Import Playlist...</MenubarItem>
-                                <MenubarItem disabled>Export Playlist...</MenubarItem>
+                                <MenubarItem disabled>
+                                    Export Playlist...
+                                </MenubarItem>
                                 <MenubarItem>Show Duplicate Items</MenubarItem>
                                 <MenubarSeparator />
                                 <MenubarItem>Get Album Artwork</MenubarItem>
-                                <MenubarItem disabled>Get Track Names</MenubarItem>
+                                <MenubarItem disabled>
+                                    Get Track Names
+                                </MenubarItem>
                             </MenubarSubContent>
                         </MenubarSub>
                         <MenubarItem>
                             Import... <MenubarShortcut>⌘O</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem disabled>Burn Playlist to Disc...</MenubarItem>
+                        <MenubarItem disabled>
+                            Burn Playlist to Disc...
+                        </MenubarItem>
                         <MenubarSeparator />
                         <MenubarItem>
-                            Show in Finder <MenubarShortcut>⇧⌘R</MenubarShortcut>{" "}
+                            Show in Finder{' '}
+                            <MenubarShortcut>⇧⌘R</MenubarShortcut>{' '}
                         </MenubarItem>
                         <MenubarItem>Convert</MenubarItem>
                         <MenubarSeparator />
@@ -137,7 +160,7 @@ export function Menu() {
                         </MenubarItem>
                         <MenubarSeparator />
                         <MenubarItem>
-                            Smart Dictation...{" "}
+                            Smart Dictation...{' '}
                             <MenubarShortcut>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +178,7 @@ export function Menu() {
                             </MenubarShortcut>
                         </MenubarItem>
                         <MenubarItem>
-                            Emoji & Symbols{" "}
+                            Emoji & Symbols{' '}
                             <MenubarShortcut>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -177,8 +200,12 @@ export function Menu() {
                 <MenubarMenu>
                     <MenubarTrigger>View</MenubarTrigger>
                     <MenubarContent>
-                        <MenubarCheckboxItem>Show Playing Next</MenubarCheckboxItem>
-                        <MenubarCheckboxItem checked>Show Lyrics</MenubarCheckboxItem>
+                        <MenubarCheckboxItem>
+                            Show Playing Next
+                        </MenubarCheckboxItem>
+                        <MenubarCheckboxItem checked>
+                            Show Lyrics
+                        </MenubarCheckboxItem>
                         <MenubarSeparator />
                         <MenubarItem inset disabled>
                             Show Status Bar
@@ -191,14 +218,22 @@ export function Menu() {
                     </MenubarContent>
                 </MenubarMenu>
                 <MenubarMenu>
-                    <MenubarTrigger className="hidden md:block">Account</MenubarTrigger>
+                    <MenubarTrigger className="hidden md:block">
+                        Account
+                    </MenubarTrigger>
                     <MenubarContent forceMount>
                         <MenubarLabel inset>Switch Account</MenubarLabel>
                         <MenubarSeparator />
                         <MenubarRadioGroup value="benoit">
-                            <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
-                            <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
-                            <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+                            <MenubarRadioItem value="andy">
+                                Andy
+                            </MenubarRadioItem>
+                            <MenubarRadioItem value="benoit">
+                                Benoit
+                            </MenubarRadioItem>
+                            <MenubarRadioItem value="Luis">
+                                Luis
+                            </MenubarRadioItem>
                         </MenubarRadioGroup>
                         <MenubarSeparator />
                         <MenubarItem inset>Manage Famliy...</MenubarItem>
@@ -207,7 +242,12 @@ export function Menu() {
                     </MenubarContent>
                 </MenubarMenu>
             </Menubar>
-            <CreatePlaylistDialog onOpenChange={() => toggleDialog(MenuDialogs.CreatePlaylistDialog)} open={isDialogOpen(MenuDialogs.CreatePlaylistDialog)} />
+            <CreatePlaylistDialog
+                onOpenChange={() =>
+                    toggleDialog(MenuDialogs.CreatePlaylistDialog)
+                }
+                open={isDialogOpen(MenuDialogs.CreatePlaylistDialog)}
+            />
         </>
     )
 }

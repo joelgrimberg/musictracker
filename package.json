@@ -1,30 +1,30 @@
 {
-  "name": "training-app",
-  "private": true,
-  "workspaces": [
-    "musictracker",
-    "cypress-js",
-    "cypress-ts",
-    "playwright"
-  ],
-  "scripts": {
-    "dev": "npm run dev --workspace=musictracker",
-    "build": "npm run build --workspace=musictracker",
-    "start": "NODE_ENV=production cd musictracker && ts-node src/server/main.ts",
-    "prettier": "npx prettier --write .",
-    "prepare": "husky install",
-    "lint": "npm run lint --workspace=musictracker",
-    "cypress:ci": "cypress run",
-    "test": "cypress run",
-    "start-test": "start-server-and-test start http://localhost:3000 test"
-  },
-  "devDependencies": {
-    "husky": "^8.0.3"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "npx prettier --write",
-      "npm run lint --workspace=musictracker"
-    ]
-  }
+    "name": "training-app",
+    "private": true,
+    "workspaces": [
+        "musictracker",
+        "cypress-js",
+        "cypress-ts",
+        "playwright"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspace=musictracker",
+        "build": "npm run build --workspace=musictracker",
+        "start": "NODE_ENV=production cd musictracker && ts-node src/server/main.ts",
+        "prettier": "npx prettier --write .",
+        "prepare": "husky install",
+        "lint": "npm run lint --workspace=musictracker",
+        "cypress:ci": "cypress run",
+        "test": "cypress run",
+        "start-test": "start-server-and-test start http://localhost:3000 test"
+    },
+    "devDependencies": {
+        "husky": "^8.0.3"
+    },
+    "lint-staged": {
+        "**/*.{js,jsx,ts,tsx}": [
+            "npx prettier --write",
+            "npx eslint -c ./.eslintrc.cjs ."
+        ]
+    }
 }

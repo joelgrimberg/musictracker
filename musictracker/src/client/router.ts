@@ -1,37 +1,40 @@
-import { Index } from "./pages";
-import App from "./App";
-import { Browse } from "./pages/browse";
-import { RootRoute, Route, Router } from "@tanstack/react-router";
-import AddMusicDialog from "./components/dialogs/add-music-dialog"
+import { Index } from './pages'
+import App from './App'
+import { Browse } from './pages/browse'
+import { RootRoute, Route, Router } from '@tanstack/react-router'
+import AddMusicDialog from './components/dialogs/add-music-dialog'
 
 const rootRoute = new RootRoute({
-  component: App,
-});
+    component: App,
+})
 
 const indexRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: Index,
-});
+    getParentRoute: () => rootRoute,
+    path: '/',
+    component: Index,
+})
 const browseRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/browse",
-  component: Browse,
-});
+    getParentRoute: () => rootRoute,
+    path: '/browse',
+    component: Browse,
+})
 
 const addTrackRoute = new Route({
     getParentRoute: () => indexRoute,
     path: '/add-track',
-    component: AddMusicDialog
+    component: AddMusicDialog,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute.addChildren([addTrackRoute]), browseRoute])
+const routeTree = rootRoute.addChildren([
+    indexRoute.addChildren([addTrackRoute]),
+    browseRoute,
+])
 
-export const router = new Router({ routeTree });
+export const router = new Router({ routeTree })
 
 // needed for maximum type safety
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
+declare module '@tanstack/react-router' {
+    interface Register {
+        router: typeof router
+    }
 }
