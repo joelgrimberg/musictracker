@@ -8,8 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "generate-migrations": "drizzle-kit generate:sqlite",
-    "migrate": "drizzle-kit push:sqlite",
-    "test": "echo \"Error: no test specified yet\" && exit 1"
+    "migrate": "drizzle-kit push:sqlite"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
@@ -58,14 +57,16 @@
     "@types/node": "^18.11.18",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.0.10",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.4",
+    "cypress": "^13.3.0",
     "drizzle-kit": "^0.19.12",
     "eslint": "^8.50.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "nodemon": "^3.0.1",
+    "start-server-and-test": "^2.0.1",
     "vite": "^4.0.4"
   }
 }
