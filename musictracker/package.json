@@ -6,7 +6,6 @@
         "dev": "nodemon src/server/main.ts -w src/server",
         "start": "NODE_ENV=production ts-node src/server/main.ts",
         "build": "vite build",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "generate-migrations": "drizzle-kit generate:sqlite",
         "migrate": "drizzle-kit push:sqlite"
     },
