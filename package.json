@@ -16,7 +16,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "cypress:ci": "cypress run",
     "test": "cypress run",
-    "start-test": "start-server-and-test start http://localhost:3000 test"
+    "start-test": "start-server-and-test start http://localhost:3000 test",
+    "postinstall": "npm run migrate --workspace=musictracker"
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.0.0",
