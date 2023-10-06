@@ -3,6 +3,6 @@ import { contract } from '../contract'
 const baseUrl = `${window.location.protocol}//${window.location.host}`
 
 export const client = initQueryClient(contract, {
-    baseUrl,
-    baseHeaders: {},
+  baseUrl,
+  baseHeaders: {},
 })

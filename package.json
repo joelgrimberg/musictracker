@@ -13,7 +13,7 @@
     "start": "NODE_ENV=production cd musictracker && ts-node src/server/main.ts",
     "prettier": "npx prettier --write .",
     "prepare": "husky install",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx,json,yml --report-unused-disable-directives --max-warnings 0",
     "cypress:ci": "cypress run",
     "test": "cypress run",
     "start-test": "start-server-and-test start http://localhost:3000 test"

@@ -16,8 +16,8 @@
 2. Create an App in [Spotify Dashboard](https://developer.spotify.com/dashboard/applications)
 3. Edit settings and add a redirect url to
 
-    ```url
-    http://localhost:3000/api/auth/callback/spotify
-    ```
+   ```url
+   http://localhost:3000/api/auth/callback/spotify
+   ```
 
 4. Copy client ID an secret to your env file (in tabtracker)
