@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
+        uses: cpina/github-action-push-to-another-repository@07c4d7b3def0a8ebe788a8f2c843a4e1de4f6900
         env:
           SSH_DEPLOY_KEY: ${{ secrets.DEPLOY_OPENSSH_PRIVATE_KEY }}
         with:
