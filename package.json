@@ -19,6 +19,7 @@
         "start-test": "start-server-and-test start http://localhost:3000 test"
     },
     "devDependencies": {
+        "eslint-config-prettier": "^9.0.0",
         "husky": "^8.0.3"
     },
     "lint-staged": {
