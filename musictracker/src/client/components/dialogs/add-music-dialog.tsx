@@ -5,13 +5,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { TrackSources } from "../../../contract";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '../ui/button'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { TrackSources } from '../../../contract'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Form,
   FormControl,
@@ -20,90 +20,90 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { useEffect } from "react";
-import { client } from "@/client";
-import { Separator } from "../ui/separator";
-import albumCoverPlaceholderImage from "../../assets/cover-placeholder.png";
-import { useNavigate } from "@tanstack/react-router";
+} from '../ui/form'
+import { useEffect } from 'react'
+import { client } from '@/client'
+import { Separator } from '../ui/separator'
+import albumCoverPlaceholderImage from '../../assets/cover-placeholder.png'
+import { useNavigate } from '@tanstack/react-router'
 const trackFormSchema = z.object({
   url: z.string().url(),
   title: z
     .string()
     .min(2, {
-      message: "Track title must be at least 2 characters.",
+      message: 'Track title must be at least 2 characters.',
     })
     .max(80, {
-      message: "Track title must not be longer than 80 characters.",
+      message: 'Track title must not be longer than 80 characters.',
     }),
   artist: z.string().optional(),
   coverUrl: z.string().url().optional(),
   source: z.nativeEnum(TrackSources),
-});
+})
 
-type TrackFormValues = z.infer<typeof trackFormSchema>;
+type TrackFormValues = z.infer<typeof trackFormSchema>
 const defaultValues: Partial<TrackFormValues> = {
   source: TrackSources.YouTube,
-  url: "",
-  title: "",
-  artist: "",
-  coverUrl: "",
-};
+  url: '',
+  title: '',
+  artist: '',
+  coverUrl: '',
+}
 function AddMusicDialog() {
   const { mutate } = client.addMusicTrack.useMutation({
     onSuccess: () => {
-      navigate({ to: "..", replace: true });
+      navigate({ to: '..', replace: true })
     },
-  });
+  })
   const form = useForm<TrackFormValues>({
     resolver: zodResolver(trackFormSchema),
     defaultValues,
-    mode: "onChange",
-  });
-  const url = form.watch("url");
-  const source = form.watch("source");
-  const title = form.watch("title");
-  const urlState = form.getFieldState("url");
-  const coverUrlState = form.getFieldState("coverUrl");
+    mode: 'onChange',
+  })
+  const url = form.watch('url')
+  const source = form.watch('source')
+  const title = form.watch('title')
+  const urlState = form.getFieldState('url')
+  const coverUrlState = form.getFieldState('coverUrl')
 
   useEffect(() => {
-    if (!urlState.invalid && url != "" && title == "") {
+    if (!urlState.invalid && url != '' && title == '') {
       client.getMetaForMedia
         .query({ query: { source, url } })
         .then(({ body, status }) => {
           if (status === 200) {
             if (body.artist) {
-              form.setValue("artist", body.artist, {
+              form.setValue('artist', body.artist, {
                 shouldTouch: false,
                 shouldValidate: true,
-              });
+              })
             }
-            form.setValue("title", body.title, {
+            form.setValue('title', body.title, {
               shouldTouch: false,
               shouldValidate: true,
-            });
-            form.setValue("coverUrl", body.coverUrl, {
+            })
+            form.setValue('coverUrl', body.coverUrl, {
               shouldTouch: false,
               shouldValidate: true,
-            });
+            })
           }
           if (status === 404 || status === 500) {
-            form.setError("url", { message: body.message });
+            form.setError('url', { message: body.message })
           }
-        });
+        })
     }
-  }, [urlState, url, source, title, form]);
+  }, [urlState, url, source, title, form])
 
   const onSubmit = (values: TrackFormValues) => {
-    mutate({ body: values });
-  };
-  const navigate = useNavigate();
+    mutate({ body: values })
+  }
+  const navigate = useNavigate()
   return (
     <Dialog
       open={true}
       onOpenChange={(open) => {
         if (!open) {
-          navigate({ to: ".." });
+          navigate({ to: '..' })
         }
       }}
     >
@@ -198,7 +198,7 @@ function AddMusicDialog() {
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
 
-export default AddMusicDialog;
+export default AddMusicDialog

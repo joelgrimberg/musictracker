@@ -1,18 +1,18 @@
-import { initContract } from "@ts-rest/core";
-import { z } from "zod";
+import { initContract } from '@ts-rest/core'
+import { z } from 'zod'
 
-const c = initContract();
+const c = initContract()
 
 const PlaylistSchema = z.object({
   id: z.number(),
   name: z.string(),
-});
+})
 
 export enum TrackSources {
-  Spotify = "spotify",
-  YouTube = "youtube",
+  Spotify = 'spotify',
+  YouTube = 'youtube',
 }
-const TrackSource = z.nativeEnum(TrackSources);
+const TrackSource = z.nativeEnum(TrackSources)
 export const TrackSchema = z.object({
   id: z.number(),
   source: TrackSource,
@@ -24,40 +24,40 @@ export const TrackSchema = z.object({
    * @type {string} - UTC timestamp in milliseconds
    */
   createdAt: z.string(),
-});
+})
 export const contract = c.router(
   {
     createPlaylist: {
-      method: "POST",
-      path: "/playlists",
+      method: 'POST',
+      path: '/playlists',
       responses: {
         201: PlaylistSchema,
       },
       body: z.object({
         name: z.string(),
       }),
-      summary: "Create a post",
+      summary: 'Create a post',
     },
     getPlaylist: {
-      method: "GET",
+      method: 'GET',
       path: `/playlists/:id`,
       responses: {
         200: PlaylistSchema.nullable(),
         400: c.type<{ message: string }>(),
         404: c.type<{ message: string }>(),
       },
-      summary: "Get a playlist by id",
+      summary: 'Get a playlist by id',
     },
     getPlaylists: {
-      method: "GET",
+      method: 'GET',
       path: `/playlists`,
       responses: {
         200: z.array(PlaylistSchema.nullable()),
       },
-      summary: "Get a all playlist",
+      summary: 'Get a all playlist',
     },
     addTrackToPlaylist: {
-      method: "POST",
+      method: 'POST',
       path: `/playlists/:id/tracks`,
       body: TrackSchema.pick({ id: true }),
       responses: {
@@ -67,25 +67,25 @@ export const contract = c.router(
       },
     },
     addMusicTrack: {
-      method: "POST",
-      path: "/tracks",
+      method: 'POST',
+      path: '/tracks',
       body: TrackSchema.omit({ id: true, createdAt: true }),
       responses: {
         201: TrackSchema,
         400: c.type<{ message: string }>(),
       },
-      summary: "Add a music track to your collection",
+      summary: 'Add a music track to your collection',
     },
     getAllMusicTracks: {
-      method: "GET",
-      path: "/tracks",
+      method: 'GET',
+      path: '/tracks',
       responses: {
         200: z.array(TrackSchema),
       },
     },
     getMetaForMedia: {
-      method: "GET",
-      path: "/meta",
+      method: 'GET',
+      path: '/meta',
       query: z.object({
         source: TrackSource,
         url: z.string().url(),
@@ -99,8 +99,8 @@ export const contract = c.router(
         404: c.type<{ message: string }>(),
         500: c.type<{ message: string }>(),
       },
-      summary: "Get metadata for a specific media URL for a source",
+      summary: 'Get metadata for a specific media URL for a source',
     },
   },
-  { pathPrefix: "/api" },
-);
+  { pathPrefix: '/api' }
+)

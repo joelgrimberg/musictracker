@@ -1,18 +1,13 @@
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../components/ui/tabs";
-import { Separator } from "@radix-ui/react-menubar";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { ScrollBar } from "../components/ui/scroll-area";
-import { listenNowAlbums, madeForYouAlbums } from "../data/albums";
-import { AlbumArtwork } from "../components/album-artwork";
-import { PodcastEmptyPlaceholder } from "../components/podcast-empty-placeholder";
-import { Link, Outlet } from "@tanstack/react-router";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
-import { buttonVariants } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
+import { Separator } from '@radix-ui/react-menubar'
+import { ScrollArea } from '@radix-ui/react-scroll-area'
+import { ScrollBar } from '../components/ui/scroll-area'
+import { listenNowAlbums, madeForYouAlbums } from '../data/albums'
+import { AlbumArtwork } from '../components/album-artwork'
+import { PodcastEmptyPlaceholder } from '../components/podcast-empty-placeholder'
+import { Link, Outlet } from '@tanstack/react-router'
+import { PlusCircledIcon } from '@radix-ui/react-icons'
+import { buttonVariants } from '@/components/ui/button'
 
 export function Index() {
   return (
@@ -111,5 +106,5 @@ export function Index() {
       </Tabs>
       <Outlet />
     </>
-  );
+  )
 }

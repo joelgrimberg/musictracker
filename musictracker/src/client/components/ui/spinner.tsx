@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import React from "react";
+import { cn } from '@/lib/utils'
+import { Loader2 } from 'lucide-react'
+import React from 'react'
 interface SpinnerProps extends React.SVGAttributes<SVGSVGElement> {}
 export const Spinner = React.forwardRef<SVGSVGElement, SpinnerProps>(
   ({ className, ...props }, ref) => {
@@ -10,10 +10,10 @@ export const Spinner = React.forwardRef<SVGSVGElement, SpinnerProps>(
         aria-atomic="true"
         aria-live="assertive"
         aria-label="Loading"
-        className={cn("animate-spin", className)}
+        className={cn('animate-spin', className)}
         ref={ref}
         {...props}
       />
-    );
-  },
-);
+    )
+  }
+)

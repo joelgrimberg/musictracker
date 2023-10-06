@@ -13,18 +13,19 @@
     "start": "NODE_ENV=production cd musictracker && ts-node src/server/main.ts",
     "prettier": "npx prettier --write .",
     "prepare": "husky install",
-    "lint": "npm run lint --workspace=musictracker",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "cypress:ci": "cypress run",
     "test": "cypress run",
     "start-test": "start-server-and-test start http://localhost:3000 test"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.3"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
+    "**/*.{js,jsx,ts,tsx,yml,json}": [
       "npx prettier --write",
-      "npm run lint --workspace=musictracker"
+      "npx eslint -c ./.eslintrc.cjs ."
     ]
   }
 }
