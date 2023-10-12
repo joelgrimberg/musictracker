@@ -23,6 +23,7 @@ const router = s.router(contract, {
         status: 400,
         body: { message: 'Invalid request, id should be a number' },
       }
+    // TODO: use db.query with relation instead of manually joining the tables
     // const result = await db.query.playlists.findFirst({ where: eq(playlistsToTracks.playlistId, +id), with: { tracks: true } }).then(p => p?.tracks ?? [])!
     const result = db
       .select()
