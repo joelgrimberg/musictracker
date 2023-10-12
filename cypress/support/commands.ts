@@ -35,3 +35,5 @@
 //     }
 //   }
 // }
+import { getDataTestId } from './commands/getTestId'
+Cypress.Commands.add('getDataTestId', getDataTestId)
