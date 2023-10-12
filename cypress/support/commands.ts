@@ -36,4 +36,6 @@
 //   }
 // }
 import { getDataTestId } from './commands/getTestId'
+import '@testing-library/cypress/add-commands'
+
 Cypress.Commands.add('getDataTestId', getDataTestId)
