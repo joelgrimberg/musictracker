@@ -85,8 +85,16 @@ const router = s.router(contract, {
   },
 })
 
-createExpressEndpoints(contract, router, app)
+if (!process.env?.ISOLATION || process.env?.ISOLATION === 'backend') {
+  createExpressEndpoints(contract, router, app)
+}
 
-ViteExpress.listen(app, 3000, () =>
-  console.log('Server is listening on port 3000...')
-)
+if (process.env?.ISOLATION && process.env?.ISOLATION === 'backend') {
+  app.listen(3000)
+}
+
+if (!process.env?.ISOLATION || process.env?.ISOLATION === 'frontend') {
+  ViteExpress.listen(app, 3000, () =>
+    console.log('Server is listening on port 3000...')
+  )
+}
