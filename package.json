@@ -37,5 +37,8 @@
       "npx prettier --write",
       "npx eslint -c ./.eslintrc.cjs ."
     ]
+  },
+  "engines": {
+    "node": ">=18.18.1 || >= 20.8.0"
   }
 }
