@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Unit test
-        run: npm test
+        run: npm run test:unit
       # - name: Test
       #   run: npm run test
       #   working-directory: musictracker
