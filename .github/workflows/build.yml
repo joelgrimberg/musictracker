@@ -30,6 +30,8 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Unit test
+        run: npm test
       # - name: Test
       #   run: npm run test
       #   working-directory: musictracker
