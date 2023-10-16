@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker'
+
 describe('Playlist', () => {
   beforeEach(() => {
     cy.intercept('/api/playlists', cy.spy().as('getPlaylistReq')).as(
@@ -11,7 +13,8 @@ describe('Playlist', () => {
     cy.get('@getPlaylistReq').should('have.been.calledOn')
   })
 
-  it.only('should be able to create a playlist', () => {
+  it('should be able to create a playlist', () => {
+    const genre = faker.music.genre()
     cy.findByRole('menubar').within(() => {
       cy.findByRole('menuitem', { name: /file/i }).click()
     })
@@ -24,11 +27,11 @@ describe('Playlist', () => {
     })
 
     cy.findByRole('dialog').within(() => {
-      cy.findByRole('textbox', { name: /playlist name/i }).type(
-        'My Epic Playlist'
-      )
+      cy.findByRole('textbox', { name: /playlist name/i }).type(genre)
       cy.findByRole('button', { name: /create playlist/i }).click()
     })
+
+    // cy.contains(genre, { timeout: 10_000 }).should('be.visible')
   })
 
   it('should be able to view a list of playlists')
