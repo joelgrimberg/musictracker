@@ -55,6 +55,7 @@ function CreatePlaylistDialog({
                 ref={playlistNameRef}
                 id="name"
                 placeholder="Name of your playlist"
+                role="textbox"
               />
             </div>
           </div>
