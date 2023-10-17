@@ -2,6 +2,9 @@ import { faker } from '@faker-js/faker'
 
 describe('Playlist', () => {
   beforeEach(() => {
+    cy.request('GET', '/api/playlists/remove-all').then((request) => {
+      expect(request.body).to.deep.equal({ success: true })
+    })
     cy.intercept('/api/playlists', cy.spy().as('getPlaylistReq')).as(
       'getPlaylists'
     )
@@ -31,7 +34,7 @@ describe('Playlist', () => {
       cy.findByRole('button', { name: /create playlist/i }).click()
     })
 
-    // cy.contains(genre, { timeout: 10_000 }).should('be.visible')
+    cy.findByRole('button', { name: genre })
   })
 
   it('should be able to view a list of playlists')
