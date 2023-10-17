@@ -1,5 +1,5 @@
 name: End-to-end tests
-on: push
+on: [push, pull_request]
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
@@ -7,6 +7,7 @@ jobs:
       fail-fast: false # https://github.com/cypress-io/github-action/issues/48
       matrix:
         containers: [1, 2] # Uses 2 parallel instances
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,6 +16,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          browser: replay-chromium
           # Linux and MacOS
           start: npm run dev
           wait-on: 'http://localhost:3000'
@@ -28,3 +30,12 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # For recording to work you must set your RECORD_REPLAY_API_KEY
+          REPLAY_API_KEY: ${{ secrets.RECORD_REPLAY_API_KEY }}
+
+      # Always run this step so failed tests are uploaded
+      - name: Upload replays
+        if: always()
+        uses: replayio/action-upload@v0.5.1
+        with:
+          api-key: ${{ secrets.RECORD_REPLAY_API_KEY }}
