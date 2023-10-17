@@ -11,10 +11,12 @@ describe('Server startup behaviour', () => {
       startServerWithFrontend,
     }))
   })
+
   afterEach(() => {
     vi.resetModules()
     vi.restoreAllMocks()
   })
+
   it('should start API with frontend when no ISOLATION env is set', async () => {
     await vi.importActual('./main')
 
@@ -24,6 +26,7 @@ describe('Server startup behaviour', () => {
     // expect vite to start
     expect(startServerWithFrontend).toBeCalled()
   })
+
   it('should start only serverWithFrontend (vite) when env ISOLATION=frontend', async () => {
     vi.stubEnv('ISOLATION', ISOLATION_MODES.Frontend)
 
@@ -35,6 +38,7 @@ describe('Server startup behaviour', () => {
     // expect vite to start
     expect(startServerWithFrontend).toBeCalled()
   })
+
   it('should start only API (express) when env ISOLATION=backend', async () => {
     vi.stubEnv('ISOLATION', ISOLATION_MODES.Backend)
 
