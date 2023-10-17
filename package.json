@@ -16,6 +16,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "cypress:ci": "cypress run",
     "test": "cypress run",
+    "test:unit": "npm run test:unit --workspace=musictracker",
     "start-test": "start-server-and-test start http://localhost:3000 test",
     "postinstall": "npm run migrate --workspace=musictracker"
   },
