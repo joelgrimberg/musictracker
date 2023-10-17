@@ -9,7 +9,7 @@ export default defineConfig({
     viewportHeight: 1080,
     viewportWidth: 1920,
     baseUrl: 'http://localhost:3000',
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     setupNodeEvents(on, config) {
       replayPlugin(on, config)
 
