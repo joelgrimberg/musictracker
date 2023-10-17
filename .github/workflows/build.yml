@@ -1,10 +1,6 @@
 name: MusicTracker build
 
-on:
-  push:
-    branches: ['main', 'ci/*']
-  pull_request:
-    branches: ['main']
+on: push
 
 jobs:
   build:
@@ -30,6 +26,8 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Unit test
+        run: npm run test:unit
       # - name: Test
       #   run: npm run test
       #   working-directory: musictracker
