@@ -13,7 +13,7 @@ import {
 import { MoreHorizontal } from 'lucide-react'
 import queryClient from '@/query-client'
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const { isLoading, data } = client.getPlaylists.useQuery(['playlists'])

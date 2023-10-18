@@ -41,12 +41,30 @@ describe('Playlist', () => {
     cy.findByRole('link', { name: genre })
   })
 
+  it('should be able to remove a playlist', () => {
+    const playlistName = faker.music.genre()
+    cy.request('POST', '/api/playlists/', { name: playlistName }).then(
+      (res) => {
+        expect(res.status).to.eq(201)
+      }
+    )
+    cy.findByRole('link', { name: playlistName })
+
+    cy.findByRole('button', { name: /open menu/i }).click()
+    cy.findByRole('menuitem', { name: /remove playlist/i }).click()
+
+    cy.findByRole('link', { name: playlistName }).should('not.exist')
+  })
+
   it('should be able to view a list of playlists')
 
-  it('should be able to remove a playlist')
   it('should be able to add a song to a playlist')
+
   it('should be able to remove a song from a playlist')
+
   it('should be able to rename a playlist')
+
   it('should be able to reorder songs in a playlist')
+
   it('should be able to reorder playlists')
 })
