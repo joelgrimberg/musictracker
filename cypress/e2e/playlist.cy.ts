@@ -38,7 +38,7 @@ describe('Playlist', () => {
       cy.findByRole('button', { name: /create playlist/i }).click()
     })
 
-    cy.findByRole('button', { name: genre })
+    cy.findByRole('link', { name: genre })
   })
 
   it('should be able to view a list of playlists')
