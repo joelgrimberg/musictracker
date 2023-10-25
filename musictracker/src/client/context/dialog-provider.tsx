@@ -7,6 +7,7 @@ import {
 } from './dialog-context'
 import CreatePlaylistDialog from '@/components/dialogs/create-playlist-dialog'
 import EditPlaylistDialog from '@/components/dialogs/edit-playlist-dialog'
+import AddMusicDialog from '@/components/dialogs/add-music-dialog'
 
 export const DialogProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [dialogs, setDialogs] =
@@ -36,6 +37,10 @@ export const DialogProvider: React.FC<PropsWithChildren> = ({ children }) => {
         playlistId={dialogs[Dialogs.EditPlaylistDialog]?.id || 0}
         onOpenChange={() => closeDialog(Dialogs.EditPlaylistDialog)}
         open={isDialogOpen(Dialogs.EditPlaylistDialog)}
+      />
+      <AddMusicDialog
+        onOpenChange={() => closeDialog(Dialogs.AddTrackDialog)}
+        open={isDialogOpen(Dialogs.AddTrackDialog)}
       />
     </>
   )

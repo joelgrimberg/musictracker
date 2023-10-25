@@ -64,19 +64,16 @@ export function Menu() {
               </MenubarSubContent>
             </MenubarSub>
             <MenubarItem>
-              Open Stream URL... <MenubarShortcut>⌘U</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>
               Close Window <MenubarShortcut>⌘W</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarSub>
               <MenubarSubTrigger>Library</MenubarSubTrigger>
               <MenubarSubContent>
-                <MenubarItem>Update Cloud Library</MenubarItem>
-                <MenubarItem>Update Genius</MenubarItem>
+                <MenubarItem>Reset library</MenubarItem>
+                {/* <MenubarItem>Update Genius</MenubarItem> */}
                 <MenubarSeparator />
-                <MenubarItem>Organize Library...</MenubarItem>
+                {/* <MenubarItem>Organize Library...</MenubarItem> */}
                 <MenubarItem>Export Library...</MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem>Import Playlist...</MenubarItem>
@@ -87,7 +84,7 @@ export function Menu() {
                 <MenubarItem disabled>Get Track Names</MenubarItem>
               </MenubarSubContent>
             </MenubarSub>
-            <MenubarItem>
+            <MenubarItem onClick={() => openDialog(Dialogs.AddTrackDialog)}>
               Import... <MenubarShortcut>⌘O</MenubarShortcut>
             </MenubarItem>
             <MenubarItem disabled>Burn Playlist to Disc...</MenubarItem>

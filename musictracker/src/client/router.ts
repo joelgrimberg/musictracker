@@ -2,7 +2,6 @@ import { Index } from './pages'
 import App from './App'
 import { Browse } from './pages/browse'
 import { RootRoute, Route, Router } from '@tanstack/react-router'
-import AddMusicDialog from './components/dialogs/add-music-dialog'
 import { Playlist } from './pages/playlist'
 import { client } from './client'
 
@@ -37,14 +36,8 @@ export const playlistRoute = new Route({
   },
 }).update({ component: Playlist })
 
-const addTrackRoute = new Route({
-  getParentRoute: () => indexRoute,
-  path: '/add-track',
-  component: AddMusicDialog,
-})
-
 const routeTree = rootRoute.addChildren([
-  indexRoute.addChildren([addTrackRoute]),
+  indexRoute,
   browseRoute,
   playlistRoute,
 ])
