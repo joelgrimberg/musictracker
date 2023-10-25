@@ -26,9 +26,9 @@ export const playlistRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/playlists/$id',
   loader: async ({ params: { id } }) => {
-    const response = await client.getPlaylist.query({ params: { id } })
+    const response = await client.getPlaylistTracks.query({ params: { id } })
     if (response.status === 200) {
-      return response.body
+      return { tracks: response.body }
     }
     if (response.status === 404) {
       throw response.body.message
