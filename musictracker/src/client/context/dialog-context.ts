@@ -6,7 +6,7 @@ export enum Dialogs {
 }
 export interface DialogState {
   open: boolean
-  id?: string
+  id?: number
 }
 
 export const defaultDialogState: Record<Dialogs, DialogState> = {
@@ -14,7 +14,7 @@ export const defaultDialogState: Record<Dialogs, DialogState> = {
   [Dialogs.EditPlaylistDialog]: { open: false },
 }
 export const DialogContext = createContext<{
-  openDialog: (dialog: Dialogs, playlistId?: string) => void
+  openDialog: (dialog: Dialogs, playlistId?: number) => void
   closeDialog: (dialog: Dialogs) => void
   isDialogOpen: (dialog: Dialogs) => boolean
 }>({

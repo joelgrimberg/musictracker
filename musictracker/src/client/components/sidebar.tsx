@@ -12,10 +12,12 @@ import {
 } from './ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
 import queryClient from '@/query-client'
+import { Dialogs, useDialogContext } from '@/context/dialog-context'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
+  const { openDialog } = useDialogContext()
   const { isLoading, data } = client.getPlaylists.useQuery(['playlists'])
   const { mutate, isLoading: isRemoving } = client.removePlaylist.useMutation({
     onSuccess: () => {
@@ -246,7 +248,15 @@ export function Sidebar({ className }: SidebarProps) {
                             })
                           }
                         >
-                          Remove playlist
+                          Remove
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          disabled={isRemoving}
+                          onClick={() =>
+                            openDialog(Dialogs.EditPlaylistDialog, playlist.id)
+                          }
+                        >
+                          Rename
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

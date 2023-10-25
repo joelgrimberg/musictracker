@@ -51,7 +51,7 @@ describe('Playlist', () => {
     cy.findByRole('link', { name: playlistName })
 
     cy.findByRole('button', { name: /open menu/i }).click()
-    cy.findByRole('menuitem', { name: /remove playlist/i }).click()
+    cy.findByRole('menuitem', { name: /remove/i }).click()
 
     cy.findByRole('link', { name: playlistName }).should('not.exist')
   })
