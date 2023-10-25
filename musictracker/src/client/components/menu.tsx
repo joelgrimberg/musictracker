@@ -14,19 +14,10 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from '@/components/ui/menubar'
-import { useState } from 'react'
-import CreatePlaylistDialog from './dialogs/create-playlist-dialog'
+import { Dialogs, useDialogContext } from '@/context/dialog-context'
 
-enum MenuDialogs {
-  CreatePlaylistDialog,
-}
 export function Menu() {
-  const [dialogs, setDialogs] = useState<Record<MenuDialogs, boolean>>({
-    [MenuDialogs.CreatePlaylistDialog]: false,
-  })
-  const isDialogOpen = (dialog: MenuDialogs): boolean => dialogs[dialog]
-  const toggleDialog = (dialog: MenuDialogs) =>
-    setDialogs((dialogs) => ({ ...dialogs, [dialog]: !dialogs[dialog] }))
+  const { openDialog } = useDialogContext()
   return (
     <>
       <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
@@ -58,7 +49,7 @@ export function Menu() {
               <MenubarSubTrigger>New</MenubarSubTrigger>
               <MenubarSubContent className="w-[230px]">
                 <MenubarItem
-                  onClick={() => toggleDialog(MenuDialogs.CreatePlaylistDialog)}
+                  onClick={() => openDialog(Dialogs.CreatePlaylistDialog)}
                 >
                   Playlist <MenubarShortcut>⌘N</MenubarShortcut>
                 </MenubarItem>
@@ -210,10 +201,6 @@ export function Menu() {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
-      <CreatePlaylistDialog
-        onOpenChange={() => toggleDialog(MenuDialogs.CreatePlaylistDialog)}
-        open={isDialogOpen(MenuDialogs.CreatePlaylistDialog)}
-      />
     </>
   )
 }
