@@ -200,40 +200,44 @@ export function Sidebar({ className }: SidebarProps) {
                 <p className="font-normal text-sm">No playlists yet...</p>
               ) : (
                 data?.body.map((playlist) => (
-                  <Link
+                  <div
+                    className="flex items-center"
                     key={`playlist-${playlist?.id}`}
-                    aria-label={playlist.name}
-                    className={cn(
-                      buttonVariants({ variant: 'ghost' }),
-                      'w-full justify-between font-normal'
-                    )}
-                    to={'/playlists/$id'}
-                    params={{ id: `${playlist.id}` }}
                   >
-                    <span className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="mr-2 h-4 w-4"
-                      >
-                        <path d="M21 15V6" />
-                        <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                        <path d="M12 12H3" />
-                        <path d="M16 6H3" />
-                        <path d="M12 18H3" />
-                      </svg>
-                      {playlist?.name}
-                    </span>
-
+                    <Link
+                      className={cn(
+                        buttonVariants({ variant: 'ghost' }),
+                        'w-full justify-between font-normal'
+                      )}
+                      to={'/playlists/$id'}
+                      params={{ id: `${playlist.id}` }}
+                    >
+                      <span className="flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="mr-2 h-4 w-4"
+                        >
+                          <path d="M21 15V6" />
+                          <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                          <path d="M12 12H3" />
+                          <path d="M16 6H3" />
+                          <path d="M12 18H3" />
+                        </svg>
+                        {playlist?.name}
+                      </span>
+                    </Link>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                          <span className="sr-only">Open menu</span>
+                          <span className="sr-only">
+                            Open menu for {playlist?.name}
+                          </span>
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -260,7 +264,7 @@ export function Sidebar({ className }: SidebarProps) {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </Link>
+                  </div>
                 ))
               )}
             </div>
