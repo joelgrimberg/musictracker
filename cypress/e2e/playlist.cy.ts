@@ -56,13 +56,42 @@ describe('Playlist', () => {
     cy.findByRole('link', { name: playlistName }).should('not.exist')
   })
 
+  it('should be able to rename a playlist name', () => {
+    const playlistName = faker.music.genre()
+    const renamedPlaylistName = faker.music.genre() + ' unique'
+
+    cy.request('POST', '/api/playlists/', { name: playlistName }).then(
+      (res) => {
+        expect(res.status).to.eq(201)
+      }
+    )
+    cy.findByRole('link', { name: playlistName })
+
+    cy.findByRole('button', { name: /open menu/i }).click()
+    cy.findByRole('menuitem', { name: /rename/i }).click()
+
+    cy.findByRole('dialog').within(() => {
+      cy.findByRole('button', { name: /update/i }).should('be.visible')
+      cy.findByRole('textbox', { name: /playlist name/i })
+        .clear()
+        .type(renamedPlaylistName + '{enter}')
+      cy.findByRole('button', { name: /updating/i }).should('be.visible')
+    })
+
+    cy.findByRole('link', { name: playlistName }).should('not.exist')
+    cy.findByRole('link', { name: renamedPlaylistName }).should('be.visible')
+  })
+
+  // TODO: move this test to component test 👇
+  it('should not be able to insert empty playlist name', () => {})
+
   it('should be able to view a list of playlists')
 
   it('should be able to add a song to a playlist')
 
   it('should be able to remove a song from a playlist')
 
-  it('should be able to rename a playlist')
+  it('should give a warning when removing an unknown song from a playlist')
 
   it('should be able to reorder songs in a playlist')
 
