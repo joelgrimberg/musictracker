@@ -60,6 +60,9 @@ describe('Playlist', () => {
     const playlistName = faker.music.genre()
     const renamedPlaylistName = faker.music.genre() + ' unique'
 
+    cy.log('playlistName:', playlistName)
+    cy.log('renamedPlaylistName:', renamedPlaylistName)
+
     cy.request('POST', '/api/playlists/', { name: playlistName }).then(
       (res) => {
         expect(res.status).to.eq(201)
@@ -74,10 +77,12 @@ describe('Playlist', () => {
       cy.findByRole('button', { name: /update/i }).should('be.visible')
       cy.findByRole('textbox', { name: /playlist name/i })
         .clear()
-        .type(renamedPlaylistName + '{enter}')
-      cy.findByRole('button', { name: /updating/i }).should('be.visible')
-    })
+        .type(renamedPlaylistName)
+      cy.findByRole('button', { name: /update/i }).click()
 
+      // TODO: add this change of button contents to component test 👇. Because of the GET api/playlists request, the button containing 'updating' will switch back to 'update' 🤔
+      //cy.findByRole('button', { name: /updating/i }).should('be.visible')
+    })
     cy.findByRole('link', { name: playlistName }).should('not.exist')
     cy.findByRole('link', { name: renamedPlaylistName }).should('be.visible')
   })
