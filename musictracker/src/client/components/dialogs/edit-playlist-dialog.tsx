@@ -74,7 +74,7 @@ function EditPlaylistDialog({
           </div>
           <DialogFooter>
             <Button disabled={isUpdating} type="submit">
-              {isUpdating ? 'Updating...' : 'Update'}
+              {isUpdating ? 'Loading...' : 'Rename'}
             </Button>
           </DialogFooter>
         </form>
