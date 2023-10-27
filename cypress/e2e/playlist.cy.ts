@@ -51,10 +51,44 @@ describe('Playlist', () => {
     cy.findByRole('link', { name: playlistName })
 
     cy.findByRole('button', { name: /open menu/i }).click()
-    cy.findByRole('menuitem', { name: /remove playlist/i }).click()
+    cy.findByRole('menuitem', { name: /remove/i }).click()
 
     cy.findByRole('link', { name: playlistName }).should('not.exist')
   })
+
+  it('should be able to rename a playlist name', () => {
+    const playlistName = faker.music.genre()
+    const renamedPlaylistName = faker.music.genre() + ' unique'
+
+    cy.log('playlistName:', playlistName)
+    cy.log('renamedPlaylistName:', renamedPlaylistName)
+
+    cy.request('POST', '/api/playlists/', { name: playlistName }).then(
+      (res) => {
+        expect(res.status).to.eq(201)
+      }
+    )
+    cy.findByRole('link', { name: playlistName })
+
+    cy.findByRole('button', { name: /open menu/i }).click()
+    cy.findByRole('menuitem', { name: /rename/i }).click()
+
+    cy.findByRole('dialog').within(() => {
+      cy.findByRole('button', { name: /rename/i }).should('be.visible')
+      cy.findByRole('textbox', { name: /playlist name/i })
+        .clear()
+        .type(renamedPlaylistName)
+      cy.findByRole('button', { name: /rename/i }).click()
+
+      // TODO: add this change of button contents to component test 👇. Because of the GET api/playlists request, the button containing 'updating' will switch back to 'update' 🤔
+      //cy.findByRole('button', { name: /updating/i }).should('be.visible')
+    })
+    cy.findByRole('link', { name: playlistName }).should('not.exist')
+    cy.findByRole('link', { name: renamedPlaylistName }).should('be.visible')
+  })
+
+  // TODO: move this test to component test 👇
+  it('should not be able to insert empty playlist name', () => {})
 
   it('should be able to view a list of playlists')
 
@@ -62,7 +96,7 @@ describe('Playlist', () => {
 
   it('should be able to remove a song from a playlist')
 
-  it('should be able to rename a playlist')
+  it('should give a warning when removing an unknown song from a playlist')
 
   it('should be able to reorder songs in a playlist')
 
