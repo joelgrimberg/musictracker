@@ -1,23 +1,14 @@
 # Qxperts Training App
 
-## How to use the app
+## Connected to the Cypress Cloud
 
-1. Install node (with `asdf` if you are a chad)
-2. Install packages `npm install` from the root
-3. Setup your environment by copying the `.env.example` to `.env`
-4. Generate the required `NEXTAUTH_SECRET` and populate the `.env` file. You can generate a secret with `openssl rand -base64 32`
-5. Generate prisma schemas `npm run db:generate`
-6. Run migrations `npm run db:push`
-7. Start the app `npm run dev`. Can be run from root, app workspace or any test project
+Within Github Actions we connect our testruns to the Cypress Cloud, so we can get acquainted with the Cypress Cloud Platform.
 
-## Connecting to spotify
+## Connected to Replay.io
 
-1. Login / Sign up to the [Spotify Developer Console](https://developer.spotify.com/)
-2. Create an App in [Spotify Dashboard](https://developer.spotify.com/dashboard/applications)
-3. Edit settings and add a redirect url to
+Withing Github Actions we make sure our testruns are recorded by Replay.io
+Using Replay.io we can then replay the testrun and see what happened during the testrun and debug the recorded tests.
 
-   ```url
-   http://localhost:3000/api/auth/callback/spotify
-   ```
+At the moment we make use of a free Replay.io account, and have therefore no single sign on.
 
-4. Copy client ID an secret to your env file (in tabtracker)
+If you want to gain insights in the recorded testruns, please use this link to get into the [Replay.io dashboard](https://app.replay.io/team/invitation?code=bb4a63e1-95cb-40ec-bdba-a70c544f4fa4)
