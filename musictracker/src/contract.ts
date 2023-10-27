@@ -29,6 +29,15 @@ const PlaylistSchema = z.object({
 
 export const contract = c.router(
   {
+    resetAllData: {
+      method: 'GET',
+      path: '/reset',
+      responses: {
+        200: c.type<{ success: true }>(),
+      },
+      summary: 'flush all data',
+    },
+
     createPlaylist: {
       method: 'POST',
       path: '/playlists',
@@ -40,9 +49,17 @@ export const contract = c.router(
       }),
       summary: 'Create a post',
     },
-    getPlaylist: {
+    removeAllPlaylists: {
       method: 'GET',
-      path: `/playlists/:id`,
+      path: '/playlists/remove-all',
+      responses: {
+        200: c.type<{ success: true }>(),
+      },
+      summary: 'Delete all playlists',
+    },
+    getPlaylistTracks: {
+      method: 'GET',
+      path: `/playlists/:id/tracks`,
       responses: {
         200: z.array(TrackSchema),
         400: c.type<{ message: string }>(),
@@ -50,13 +67,42 @@ export const contract = c.router(
       },
       summary: 'Get a playlist by id',
     },
+    getPlaylist: {
+      method: 'GET',
+      path: `/playlists/:id`,
+      responses: {
+        200: PlaylistSchema.omit({ tracks: true }),
+        400: c.type<{ message: string }>(),
+        404: c.type<{ message: string }>(),
+      },
+      summary: 'Get a playlist by id',
+    },
+    removePlaylist: {
+      method: 'DELETE',
+      path: `/playlists/:id`,
+      body: z.optional(PlaylistSchema.omit({ tracks: true })),
+      responses: {
+        200: c.type<{ deleted: true }>(),
+        404: c.type<{ message: string }>(),
+      },
+      summary: 'Remove a playlist by id',
+    },
     getPlaylists: {
       method: 'GET',
       path: `/playlists`,
       responses: {
         200: z.array(PlaylistSchema.omit({ tracks: true })),
       },
-      summary: 'Get a all playlist',
+      summary: 'Get all playlists',
+    },
+    updatePlaylist: {
+      method: 'PATCH',
+      path: `/playlists/:id`,
+      body: PlaylistSchema.omit({ tracks: true, id: true }),
+      responses: {
+        200: PlaylistSchema.omit({ tracks: true }),
+        404: c.type<{ message: string }>(),
+      },
     },
     addTrackToPlaylist: {
       method: 'POST',
