@@ -74,11 +74,11 @@ describe('Playlist', () => {
     cy.findByRole('menuitem', { name: /rename/i }).click()
 
     cy.findByRole('dialog').within(() => {
-      cy.findByRole('button', { name: /update/i }).should('be.visible')
+      cy.findByRole('button', { name: /rename/i }).should('be.visible')
       cy.findByRole('textbox', { name: /playlist name/i })
         .clear()
         .type(renamedPlaylistName)
-      cy.findByRole('button', { name: /update/i }).click()
+      cy.findByRole('button', { name: /rename/i }).click()
 
       // TODO: add this change of button contents to component test 👇. Because of the GET api/playlists request, the button containing 'updating' will switch back to 'update' 🤔
       //cy.findByRole('button', { name: /updating/i }).should('be.visible')
